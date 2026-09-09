@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김성재 — 개발 기록</title>
+<meta name="description" content="iOS 앱 Lunarc를 혼자 설계·개발해 App Store에 출시하고 운영 중입니다. 무엇을 근거로 그렇게 결정했는지 정리한 기록.">
+<link rel="canonical" href="https://jakesjk.github.io/me/">
+<meta property="og:title" content="김성재 — 개발 기록">
+<meta property="og:description" content="Lunarc를 만들며 내린 결정과 그 근거.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://jakesjk.github.io/me/">
+<meta property="og:image" content="https://jakesjk.github.io/images/web/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0b0f19;
+    --surface: #121826;
+    --surface-2: #161d2e;
+    --line: #1e2536;
+    --line-2: #2a3348;
+    --text: #e8eaf0;
+    --text-2: #c3c9d8;
+    --muted: #8892a8;
+    --accent: #6ee7a8;
+    --warn: #f0b86e;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
+    line-height: 1.75; -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── 상단 바 ── */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0; position: sticky; top: 0; z-index: 20;
+    background: rgba(11,15,25,.85); backdrop-filter: saturate(160%) blur(12px);
+  }
+  .nav .back { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .nav .back:hover { color: var(--text-2); }
+  .nav .who { font-weight: 700; font-size: 15px; }
+
+  /* ── 헤더 ── */
+  header.top { padding: 56px 0 40px; }
+  h1 { font-size: 40px; line-height: 1.2; letter-spacing: -0.03em; margin: 0 0 14px; font-weight: 800; }
+  .role { font-size: 17px; color: var(--text-2); margin: 0 0 26px; max-width: 34em; }
+  .role b { color: var(--text); font-weight: 600; }
+  .contact { display: flex; flex-wrap: wrap; gap: 10px; }
+  .contact a {
+    font-size: 14px; text-decoration: none; color: var(--text-2);
+    border: 1px solid var(--line-2); border-radius: 999px; padding: 8px 16px;
+  }
+  .contact a:hover { border-color: var(--muted); color: var(--text); }
+
+  /* ── 요약 지표 ── */
+  .summary {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; margin: 8px 0 72px;
+  }
+  .summary div { background: var(--bg); padding: 20px 18px; }
+  .summary .n { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+  .summary .l { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+
+  /* ── 섹션 ── */
+  section { padding-bottom: 76px; }
+  .eyebrow { font-size: 12.5px; font-weight: 700; color: var(--accent); letter-spacing: .05em; margin-bottom: 10px; }
+  h2 { font-size: 28px; line-height: 1.3; letter-spacing: -0.025em; margin: 0 0 12px; font-weight: 800; }
+  .sec-sub { color: var(--text-2); font-size: 15.5px; margin: 0 0 30px; }
+
+  /* 프로젝트 메타 */
+  .meta {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px 24px; margin-bottom: 22px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 30px;
+  }
+  .meta .k { font-size: 12px; color: var(--muted); letter-spacing: .03em; }
+  .meta .v { font-size: 14.5px; color: var(--text-2); }
+  .meta .v b { color: var(--text); font-weight: 600; }
+
+  /* 결과 카드 */
+  .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 40px; }
+  .res {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line-2); border-radius: 14px; padding: 20px 22px;
+  }
+  .res .n { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+  .res .n small { font-size: 15px; color: var(--muted); font-weight: 600; }
+  .res .l { font-size: 13.5px; color: var(--text-2); margin-top: 4px; }
+
+  /* 케이스 */
+  .case { border-top: 1px solid var(--line); padding: 34px 0 6px; }
+  .case .num { font-size: 12.5px; font-weight: 700; color: var(--muted); letter-spacing: .08em; }
+  .case h3 { font-size: 21px; line-height: 1.35; letter-spacing: -0.02em; margin: 6px 0 18px; font-weight: 700; }
+  .row { display: grid; grid-template-columns: 84px 1fr; gap: 14px; margin-bottom: 14px; }
+  .row:last-child { margin-bottom: 0; }
+  .row .k { font-size: 12.5px; font-weight: 700; color: var(--muted); padding-top: 4px; letter-spacing: .02em; }
+  .row .v { font-size: 15px; color: var(--text-2); }
+  .row .v b { color: var(--text); font-weight: 600; }
+  .row .v ul { margin: 6px 0 0; padding-left: 17px; }
+  .row .v li { margin-bottom: 4px; }
+  .row.out .k { color: var(--warn); }
+  .row.out .v { color: var(--text); font-weight: 600; }
+
+  table.opt { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 4px 0 0; }
+  table.opt th, table.opt td { border: 1px solid var(--line-2); padding: 8px 11px; text-align: left; vertical-align: top; }
+  table.opt th { background: var(--surface); font-weight: 700; color: var(--text-2); font-size: 12.5px; }
+  table.opt td { color: var(--text-2); }
+  table.opt tr.pick td { background: rgba(110,231,168,.06); color: var(--text); }
+  table.opt tr.pick td:first-child::after { content: " ←"; color: var(--accent); font-weight: 800; }
+
+  .lesson {
+    margin: 18px 0 0; padding: 15px 18px;
+    background: var(--surface); border-left: 2px solid var(--accent); border-radius: 0 10px 10px 0;
+    font-size: 14.5px; color: var(--text-2);
+  }
+  .lesson b { color: var(--text); }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; background: #0f1420; border: 1px solid var(--line);
+    padding: 1px 6px; border-radius: 5px; color: #cfd6e6;
+  }
+
+  /* 트러블슈팅 */
+  .tsl { display: grid; gap: 10px; }
+  details {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 20px;
+  }
+  details[open] { border-color: var(--line-2); }
+  summary { cursor: pointer; font-size: 15.5px; font-weight: 600; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "+ "; color: var(--accent); font-weight: 800; }
+  details[open] summary::before { content: "− "; }
+  details .body { font-size: 14.5px; color: var(--text-2); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+  details .body b { color: var(--text); }
+
+  /* 스택 */
+  .stack { display: grid; gap: 14px; }
+  .stack .g { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: baseline; }
+  .stack .g .t { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .stack .g .d { font-size: 14.5px; color: var(--text-2); }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0 60px; color: var(--muted); font-size: 13.5px; }
+  footer a { color: #9aa3ba; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .note { font-size: 12.5px; color: #6f7890; margin-top: 12px; line-height: 1.7; }
+
+  @media (max-width: 720px) {
+    h1 { font-size: 30px; }
+    .summary { grid-template-columns: repeat(2, 1fr); }
+    .meta { grid-template-columns: 1fr; }
+    .results { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .stack .g { grid-template-columns: 1fr; gap: 2px; }
+    section { padding-bottom: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav">
+    <div class="who">김성재</div>
+    <a class="back" href="../">← Lunarc</a>
+  </nav>
+
+  <header class="top">
+    <h1>만든 것보다<br>왜 그렇게 만들었는지</h1>
+    <p class="role">
+      iOS 앱 <b>Lunarc</b>를 혼자 설계·개발해 App Store에 출시하고 운영하고 있습니다.
+      기획부터 배포·수익화·장애 대응까지 한 사이클을 직접 돌립니다.
+      이 페이지는 무엇을 만들었는지가 아니라 <b>무엇을 근거로 결정했는지</b>에 대한 기록입니다.
+    </p>
+    <div class="contact">
+      <a href="https://apps.apple.com/kr/app/id6769979902">App Store</a>
+      <a href="https://github.com/jakesjk">GitHub</a>
+      <a href="mailto:jakesungjaekim@gmail.com">jakesungjaekim@gmail.com</a>
+    </div>
+  </header>
+
+  <div class="summary">
+    <div><div class="n">2026.07</div><div class="l">App Store 출시</div></div>
+    <div><div class="n">11개국</div><div class="l">서비스 중</div></div>
+    <div><div class="n">1인</div><div class="l">기획 → 운영 전담</div></div>
+    <div><div class="n">약 6개월</div><div class="l">지속 릴리스</div></div>
+  </div>
+
+  <section>
+    <div class="eyebrow">PROJECT</div>
+    <h2>Lunarc — 남은 시간을 비춰 하루를 설계하는 iOS 앱</h2>
+    <p class="sec-sub">
+      "남은 인생에서 오늘은 어떤 의미인가"라는 질문을 시간 관리로 옮긴 앱입니다.
+      혼자 만들었고, 출시 이후에도 사용 로그를 근거로 구조를 계속 고치고 있습니다.
+    </p>
+
+    <div class="meta">
+      <div><div class="k">역할</div><div class="v"><b>기획 · 디자인 · 개발 · 출시 · 운영</b> 전담 (1인)</div></div>
+      <div><div class="k">기간</div><div class="v">2026.03 ~ 현재 · 출시 2026.07.15</div></div>
+      <div><div class="k">iOS</div><div class="v">Swift, SwiftUI, WidgetKit, StoreKit 2, Swift Testing</div></div>
+      <div><div class="k">백엔드</div><div class="v">TypeScript, Hono, Cloudflare Workers, D1, KV, Workers AI</div></div>
+    </div>
+
+    <div class="results">
+      <div class="res"><div class="n">167.7MB → 4.9MB</div><div class="l">아이콘 애셋 97.1% 절감 · 호출부 228곳 수정 0</div></div>
+      <div class="res"><div class="n">32% → 76%</div><div class="l">현지화 후 해외 유입 비중</div></div>
+      <div class="res"><div class="n">월 $0</div><div class="l">운영비 · 마이그레이션 중 중단·유실 0</div></div>
+      <div class="res"><div class="n">1,513줄</div><div class="l">사용 로그를 근거로 제거한 기능</div></div>
+    </div>
+
+    <!-- 01 -->
+    <div class="case">
+      <div class="num">CASE 01 · 인프라</div>
+      <h3>출시를 미루고 백엔드를 전면 이관하다</h3>
+
+      <div class="row"><div class="k">상황</div><div class="v">
+        Spring Boot + PostgreSQL 구성은 상시 인스턴스가 필요해 사용자가 없는 시점에도 고정비가 들고,
+        무료 티어에서는 콜드스타트가 발생했습니다. 출시를 앞둔 시점이었습니다.
+      </div></div>
+
+      <div class="row"><div class="k">선택지</div><div class="v">
+        <table class="opt">
+          <tr><th>안</th><th>비용</th><th>리스크</th></tr>
+          <tr><td>현행 유지 후 출시</td><td>즉시 출시 가능</td><td>고정비 지속 · 콜드스타트 잔존</td></tr>
+          <tr><td>BaaS 전환</td><td>구현량 최소</td><td>인증·결제 로직이 벤더에 종속</td></tr>
+          <tr class="pick"><td>Cloudflare Workers + D1</td><td><b>출시 2~4개월 지연</b></td><td>엣지 런타임 제약 · 이관 중 데이터 유실</td></tr>
+        </table>
+      </div></div>
+
+      <div class="row"><div class="k">결정</div><div class="v">
+        지연을 감수하고 이관을 택했습니다. 근거는 둘이었습니다.
+        ① 사용자가 늘수록 고정비 구조가 불리해진다 ② 인증·영수증 검증처럼 핵심 로직은 직접 통제하고 싶었다.
+        <b>지연 자체를 비용으로 명시하고 비교한 뒤</b> 골랐습니다.
+      </div></div>
+
+      <div class="row"><div class="k">실행</div><div class="v">
+        14개 모듈을 한 번에 옮기지 않고 <b>모듈 단위로 단계 이관</b>했습니다.
+        모듈마다 설계 검토 → 구현 → 성능·한계 검토 → 코드리뷰 → 테스트 → 수동 검증을 통과해야 다음으로 넘어갔습니다.
+      </div></div>
+
+      <div class="row out"><div class="k">결과</div><div class="v">
+        운영비 월 $0 유지 · 이관 중 서비스 중단 0 · 데이터 유실 0
+      </div></div>
+
+      <div class="lesson">
+        <b>배운 것</b> — "더 나은 기술"이라서 옮긴 게 아닙니다. 옮기지 않았을 때 나중에 치를 비용이
+        지금 치를 지연보다 크다고 계산했기 때문입니다. 기술 선택을 설명할 때는 장점이 아니라
+        <b>비교 대상과 감수한 손해</b>를 말해야 한다고 생각합니다.
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="case">
+      <div class="num">CASE 02 · 제품</div>
+      <h3>직접 만든 기능을 사용 로그를 보고 제거하다</h3>
+
+      <div class="row"><div class="k">상황</div><div class="v">
+        챌린지와 집중 세션 기능이 핵심 가치인 '하루 설계'와 화면에서 경쟁하고 있었습니다.
+        감으로는 "쓸 것 같은데 안 쓰는 것 같다" 수준이라 판단이 서지 않았습니다.
+      </div></div>
+
+      <div class="row"><div class="k">측정</div><div class="v">
+        운영 DB를 직접 조회했습니다. 전체 계정 41개 중 <b>테스트 시드 31개를 걸러내고 실사용자 10명</b>의 로그만 봤습니다.
+        <ul>
+          <li>일정 <b>146건</b> — 압도적 주 사용</li>
+          <li>할 일 17건 (3명)</li>
+          <li>챌린지 참여 8행 (3명) · <b>완주 0건</b></li>
+          <li>집중 세션 <b>2건</b> (1명)</li>
+        </ul>
+      </div></div>
+
+      <div class="row"><div class="k">결정</div><div class="v">
+        두 기능을 함께 제거하고 탭 구조를 일정 중심으로 재편했습니다.
+        <b>1,513줄을 2건 때문에 유지할 이유가 없다</b>고 봤습니다.
+        다만 사용량이 낮다고 전부 지우진 않았습니다. '빛'(익명 한 줄 공유)도 실사용 1건이었지만
+        <b>참여자가 없어도 혼자 쓸 때 가치가 성립하는 구조</b>라 남겼습니다.
+      </div></div>
+
+      <div class="row"><div class="k">안전장치</div><div class="v">
+        코드를 지우지 않고 진입점만 차단한 뒤 복원 가능한 상태로 보존했습니다.
+        보존이 실제로 되는지 <b>복원 절차를 한 번 실행해 빌드 성공까지 확인</b>했습니다.
+      </div></div>
+
+      <div class="row out"><div class="k">결과</div><div class="v">
+        1,513줄 제거 · 일정 중심 IA로 재편 · 되돌리기 비용을 사전에 확보
+      </div></div>
+
+      <div class="lesson">
+        <b>배운 것</b> — 판단의 질은 데이터를 봤느냐보다 <b>어떤 데이터를 걸러냈느냐</b>에서 갈렸습니다.
+        시드 31개를 실사용으로 착각했다면 "41명 중 3명이 쓴다"로 읽혀 제거하지 못했을 겁니다.
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="case">
+      <div class="num">CASE 03 · 아키텍처</div>
+      <h3>사고를 계기로 저장 구조 자체를 다시 설계하다</h3>
+
+      <div class="row"><div class="k">발단</div><div class="v">
+        운영 환경에서 <b>일정이 중복 생성되는 사고</b>가 발생했습니다(레코드 4건).
+      </div></div>
+
+      <div class="row"><div class="k">원인</div><div class="v">
+        로그인 세션 만료를 앱이 <b>"오프라인 상태"로 잘못 분류</b>하고 있었습니다.
+        그 상태에서 만든 일정이 오프라인 큐에 쌓였고, 재로그인 시 큐가 일괄 재전송되며 같은 일정이 다시 생성됐습니다.
+      </div></div>
+
+      <div class="row"><div class="k">결정</div><div class="v">
+        큐 로직만 고치지 않고 <b>비로그인 사용자의 저장 모델 자체를 바꿨습니다.</b>
+        비로그인 상태에서는 로컬 저장소를 정본으로 삼아 서버 통신을 아예 하지 않고, 로그인 순간에만 1회 병합합니다.
+        <ul>
+          <li>인증 오류와 오프라인을 <b>분리</b> — 만료 시 "다시 로그인" 안내</li>
+          <li>생성 요청에 멱등 키 동봉 + DB 유니크 제약으로 <b>중복을 구조적으로 차단</b></li>
+          <li>기존 큐를 재활용하지 않음 — 재전송 대기열을 저장소로 남용한 것이 사고 원인이었기 때문</li>
+        </ul>
+      </div></div>
+
+      <div class="row out"><div class="k">결과</div><div class="v">
+        가입 없이 핵심 기능 사용 가능 · 게스트 구간 서버 통신 0회 · 중복 생성 원천 차단
+      </div></div>
+
+      <div class="lesson">
+        <b>배운 것</b> — 표면 원인은 큐였지만 진짜 원인은 <b>"임시 저장"과 "재전송 대기열"을 같은 저장소로 쓴 설계</b>였습니다.
+        증상을 막는 수정과 원인을 없애는 수정은 다르다는 걸 이 건에서 배웠습니다.
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="case">
+      <div class="num">CASE 04 · 지표</div>
+      <h3>현지화에 쓴 시간이 값을 했는지 사후에 확인하다</h3>
+
+      <div class="row"><div class="k">상황</div><div class="v">
+        앱 문자열 전량을 영어·일본어로 옮기고 타임존을 일반화하는 데 상당한 시간을 썼습니다.
+        그런데 <b>그 투자가 실제 유입으로 이어졌는지 확인할 방법이 없었습니다.</b>
+        앱 안의 사용 로그는 보고 있었지만, 앱 밖(설치·국가)은 한 번도 보지 않고 있었습니다.
+      </div></div>
+
+      <div class="row"><div class="k">조치</div><div class="v">
+        App Store 판매 리포트를 받아 신규 설치를 국가별로 집계하는 스크립트를 만들었습니다.
+        외부 라이브러리 없이 <code>ES256</code> 서명부터 직접 구현했고, 정기 실행을 걸어
+        <b>수집을 습관이 아니라 시스템으로</b> 만들었습니다.
+      </div></div>
+
+      <div class="row"><div class="k">확인</div><div class="v">
+        출시일부터 <b>11개국</b>. 절대 수는 작지만(마케팅 미집행) 구성이 바뀌어 있었습니다.
+        <ul>
+          <li>현지화 전 — 해외 비중 <b>32%</b></li>
+          <li>현지화 후 — 해외 비중 <b>76%</b></li>
+          <li>일본·말레이시아·튀르키예·스페인 등 <b>이전에 없던 유입</b></li>
+        </ul>
+      </div></div>
+
+      <div class="row out"><div class="k">결과</div><div class="v">
+        현지화 투자의 효과를 숫자로 확인 · 이후 판단에 쓸 기준선 확보
+      </div></div>
+
+      <div class="lesson">
+        <b>배운 것</b> — 저는 제품 <b>안</b>의 데이터는 보고 있었지만 <b>밖</b>은 보지 않고 있었습니다.
+        지금은 절대 수가 작아 판단에 쓸 수 없지만, <b>측정을 먼저 세워두는 것</b>이
+        나중에 판단할 자격을 만든다고 생각합니다.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">TROUBLESHOOTING</div>
+    <h2>막혔던 지점들</h2>
+    <p class="sec-sub">각 항목은 실제 커밋·운영 로그·심사 대응 문서에 근거합니다.</p>
+
+    <div class="tsl">
+      <details>
+        <summary>모킹 테스트가 통과한 채로 운영에서 전량 실패했다</summary>
+        <div class="body">
+          주간 활동을 AI로 분류하는 기능이 배포 시점부터 전량 실패했습니다. 테스트는 전부 통과한 상태였습니다.
+          원인은 두 겹이었습니다 — 쓰던 모델이 제공사에서 <b>이미 폐기</b>됐고, 현행 모델은 응답을 문자열이 아니라
+          파싱된 객체로 반환하는데 코드가 문자열 변환을 해 <code>[object Object]</code>가 되고 있었습니다.
+          테스트가 못 잡은 이유는 명확합니다. <b>모킹된 응답은 영원히 폐기되지 않습니다.</b>
+          모델을 교체하고 응답 형태를 정규화한 뒤, 이 기능의 완료 기준에 <b>실제 추론을 한 번 왕복시키는 검증</b>을 넣었습니다.
+          <br><br>
+          <b>배운 것</b> — 외부 모델 이름은 계약이 아니라 시한부 자원입니다. 내가 바꾸지 않아도 상대가 사라질 수 있는
+          의존은 코드가 아니라 실제 호출로만 검증됩니다.
+        </div>
+      </details>
+
+      <details>
+        <summary>심사 반려 사유를 그대로 믿지 않고 실제 위치를 특정했다</summary>
+        <div class="body">
+          구독 가이드라인 3.1.2(c) 위반으로 반려됐습니다. 통보만 보면 앱 내 구독 화면을 고쳐야 할 것처럼 읽힙니다.
+          Apple이 요구하는 네 가지(제목·기간·가격·약관 링크)를 <b>요구 위치별로 표에 놓고 실제 상태와 대조</b>했더니,
+          <b>앱 내부는 이미 전부 충족</b>돼 있었고 빠진 것은 App Store Connect 메타데이터의 <b>이용약관 링크 한 곳</b>뿐이었습니다.
+          앱을 수정하지 않고 메타데이터를 채워 재제출해 통과했습니다.
+          <br><br>
+          <b>배운 것</b> — 반려 사유는 증상 설명이지 원인 지목이 아닙니다. 위치별로 분해해 대조하지 않았다면
+          멀쩡한 화면을 뜯어고치고 며칠을 썼을 겁니다.
+        </div>
+      </details>
+
+      <details>
+        <summary>앱 애셋의 97%가 쓰이지 않고 있었다</summary>
+        <div class="body">
+          아이콘 라이브러리의 컴파일된 애셋 카탈로그가 <b>167.7MB</b>였습니다. 아이콘 1,512종 × 굵기 6종 =
+          이미지 9,108개가 전부 들어 있었고, 애셋 카탈로그는 미사용 리소스를 제거해 주지 않습니다.
+          <br><br>
+          바로 지우지 않고 <b>위험부터 확인</b>했습니다. 아이콘을 문자열로 동적 조회하는 경로가 있으면
+          사용자가 저장한 카테고리 아이콘이 런타임에 빈 화면으로 깨집니다. 문자열로 아이콘을 만드는 코드 0건,
+          전체 순회 0건, 시스템 아이콘 매핑은 정적 분기라 모두 컴파일 시점 확정 — 확인 후 진행했습니다.
+          <br><br>
+          실제 사용하는 <b>91종 × 3굵기 = 273개</b>만 남긴 패키지로 교체했습니다. 모듈 이름과 호출 형태를 원본과
+          동일하게 유지해 <b>호출부 228곳을 한 줄도 고치지 않았습니다.</b> 쓰지 않는 굵기는 아예 노출하지 않아,
+          실수로 호출하면 런타임에 조용히 빈 이미지가 뜨는 대신 <b>컴파일이 실패</b>하게 만들었습니다.
+          <br><br>
+          첫 빌드는 <code>type 'Ph' has no member 'repeat'</code>로 실패했습니다. <code>repeat</code>은 Swift 예약어라
+          백틱으로 감싸 선언되는데 수집 스크립트가 이를 놓친 것이었고, 전체 개수가 1,512가 아닌 1,511로 집계된
+          불일치가 단서였습니다.
+          <br><br>
+          <b>배운 것</b> — 큰 폭의 삭제에서 중요한 건 얼마나 지웠는가가 아니라 <b>지운 것이 잘못됐을 때
+          어떻게 드러나게 할 것인가</b>였습니다.
+        </div>
+      </details>
+
+      <details>
+        <summary>빌드·테스트가 모두 통과한 결함을 잡아냈다</summary>
+        <div class="body">
+          탭 구조를 개편하며 화면 코드를 이관하던 중이었습니다. 빌드 성공, 테스트 통과, 심볼·문자열 기계 대조까지
+          전부 통과한 상태였는데, 이관된 코드를 원본과 <b>한 줄씩 대조하는 독립 검증 단계</b>에서
+          조건부 표시를 결정하는 분기 2줄이 소실된 것이 발견됐습니다. 원본에 없던 버튼이 항상 노출되고 있었습니다.
+          <br><br>
+          더 큰 문제는 소실 사실을 모른 채 <b>"원본과 동일하다"는 주석까지 달아둔 상태</b>였다는 점입니다.
+          사실과 다른 주석은 다음 사람이 재검증을 건너뛰게 만들기 때문에 코드 결함보다 오래 살아남습니다.
+          <br><br>
+          <b>배운 것</b> — 자동 검증은 "무엇이 있는가"는 확인하지만 <b>"무엇이 사라졌는가"는 확인하지 못합니다.</b>
+        </div>
+      </details>
+
+      <details>
+        <summary>번역이 크래시로 이어질 수 있는 경로를 차단했다</summary>
+        <div class="body">
+          앱 문자열 전량을 영어·일본어로 현지화하는 작업이었습니다. 번역문에는 숫자·이름이 들어갈 서식 자리표시자가
+          포함되는데, 원문과 <b>종류나 개수가 어긋나면 런타임 크래시</b>로 이어집니다. 수백 개를 눈으로 대조하는
+          방식은 반드시 빠뜨립니다.
+          <br><br>
+          번역 주입 전에 <b>원문과 번역문의 자리표시자 집합을 전수 대조</b>하고, 하나라도 불일치하면 주입을
+          중단하도록 자동화했습니다. 타임존도 함께 정리해, 서버 시간을 한국 시간으로 고정하던 코드를
+          시간대 중립 코어와 지역별 래퍼로 분리했습니다.
+          <br><br>
+          <b>배운 것</b> — 번역은 텍스트 교체가 아니라 계약을 지키는 작업이었습니다. 사람이 반복하면 반드시 틀리는
+          종류의 검사는 사람에게 맡기지 않는 편이 낫습니다.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">TOOLING</div>
+    <h2>Mk — AI 코딩 에이전트를 관리하는 파이프라인</h2>
+    <p class="sec-sub">
+      개발에 AI 코딩 도구를 주력으로 씁니다. 다만 결과물을 그대로 신뢰하지 않기 위해 검증 장치를 직접 만들었습니다.
+      훅 21종, 역할별 검증 에이전트 8종, 워크트리 자동화, 세션 간 기록 프로토콜로 구성돼 있습니다.
+    </p>
+
+    <div class="tsl">
+      <details>
+        <summary>규칙을 문서가 아니라 훅으로 집행한다</summary>
+        <div class="body">
+          변경 전 파일 확인을 강제하고, 파괴적 명령을 차단하고, 기록 없는 종료를 막고,
+          같은 실패가 3회 반복되면 진행을 멈춥니다. 규칙을 사람의 기억이 아니라 <b>도구가 집행하도록</b> 옮긴 것입니다.
+        </div>
+      </details>
+      <details>
+        <summary>기계 검증이 놓치는 결함을 사람 관점으로 잡는다</summary>
+        <div class="body">
+          빌드·테스트·문자열 대조가 모두 통과한 상태에서 조건부 표시 가드가 소실된 것을,
+          원본과 한 줄씩 대조하는 독립 검증 단계가 실제로 검출했습니다. 검토 관점을 역할별로 나누고
+          사안 규모에 따라 투입량을 조절하는 기준을 두고 있습니다.
+        </div>
+      </details>
+      <details>
+        <summary>반복 작업은 생성 스크립트로 대체한다</summary>
+        <div class="body">
+          아이콘 목록이 바뀔 때마다 필요하던 수작업 대조를, 사용처를 재수집해
+          <b>패키지와 검증 테스트를 함께 생성하는 스크립트</b>로 대체했습니다.
+          명령 한 줄로 전량 재생성되고, 누락은 런타임이 아니라 컴파일 단계에서 드러납니다.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">STACK</div>
+    <h2>쓰는 것들</h2>
+    <div class="stack">
+      <div class="g"><div class="t">iOS</div><div class="d">Swift · SwiftUI · WidgetKit · StoreKit 2 · Swift Testing</div></div>
+      <div class="g"><div class="t">Backend</div><div class="d">TypeScript · Python · Hono · Cloudflare Workers · D1 · KV · Drizzle ORM · Vitest</div></div>
+      <div class="g"><div class="t">AI</div><div class="d">LLM API 연동(Workers AI) · 프롬프트 설계 · 에이전트 오케스트레이션 · 실추론 기반 품질 검증</div></div>
+      <div class="g"><div class="t">그 외</div><div class="d">GitHub Actions · launchd 정기 실행 · AdMob(UMP/ATT) · FCM · Apple·Kakao OAuth</div></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="mailto:jakesungjaekim@gmail.com">jakesungjaekim@gmail.com</a> ·
+      <a href="https://github.com/jakesjk">GitHub</a> ·
+      <a href="https://apps.apple.com/kr/app/id6769979902">Lunarc</a> ·
+      <a href="../">앱 소개</a>
+    </div>
+    <p class="note">
+      본 문서의 수치는 저장소 커밋, 운영 DB 조회 기록, App Store Connect 판매 리포트에 근거합니다.
+      용량 수치는 앱 번들 내 애셋 카탈로그 기준이며, App Store 실제 다운로드 용량은 압축·앱 시닝이 적용되어 이보다 작습니다.
+    </p>
+    <div style="margin-top:14px">© 2026 김성재</div>
+  </div>
+</footer>
+
+</body>
+</html>

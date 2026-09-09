@@ -3,90 +3,301 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lunarc — 남은 시간을 인식하고, 오늘을 소중히</title>
-<meta name="description" content="Lunarc는 남은 시간을 인식하고 그 시간을 소중하게 사용하도록 돕는 iOS 앱입니다. 일정, 챌린지, 집중 모드, 위젯.">
-<meta property="og:title" content="Lunarc">
-<meta property="og:description" content="남은 시간을 인식하고, 오늘을 소중히">
+<title>Lunarc — 오늘을 더 소중히 사는 법</title>
+<meta name="description" content="남은 시간을 하루 호로 비춰 오늘을 또렷하게 바라보는 iOS 앱. 하루 설계, 주간 회고, 버킷리스트, 캘린더 연동. 한국어·영어·일본어.">
+<link rel="canonical" href="https://jakesjk.github.io/">
+<meta property="og:title" content="Lunarc — 오늘을 더 소중히 사는 법">
+<meta property="og:description" content="남은 시간을 가만히 비춰, 오늘 하루를 더 또렷하게.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://jakesjk.github.io/">
+<meta property="og:image" content="https://jakesjk.github.io/images/web/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-  :root { color-scheme: dark; }
+  :root {
+    color-scheme: dark;
+    --bg: #0b0f19;
+    --surface: #121826;
+    --surface-2: #161d2e;
+    --line: #1e2536;
+    --line-2: #2a3348;
+    --text: #e8eaf0;
+    --text-2: #c3c9d8;
+    --muted: #8892a8;
+    --accent: #6ee7a8;
+  }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: #0b0f19;
-    color: #e8eaf0;
+    background: var(--bg);
+    color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", system-ui, sans-serif;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 88px 24px 64px; }
-  .moon { font-size: 44px; line-height: 1; }
-  h1 { font-size: 40px; margin: 20px 0 8px; letter-spacing: -0.02em; font-weight: 700; }
-  .tagline { font-size: 19px; color: #a9b1c6; margin: 0 0 36px; }
-  .lead { font-size: 16px; color: #c3c9d8; margin: 0 0 40px; }
-  ul.features { list-style: none; padding: 0; margin: 0 0 44px; }
-  ul.features li {
-    padding: 14px 0;
-    border-top: 1px solid #1e2536;
-    font-size: 16px;
-    color: #d3d8e5;
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── 상단 바 ───────────────────────────── */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0; position: sticky; top: 0; z-index: 20;
+    background: rgba(11,15,25,.82); backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 1px solid transparent;
   }
-  ul.features li:last-child { border-bottom: 1px solid #1e2536; }
-  ul.features b { color: #f2f4f9; font-weight: 600; }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+  .brand .m { font-size: 20px; }
+  .nav .btn-sm {
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    padding: 9px 16px; border-radius: 999px;
+    background: var(--text); color: var(--bg);
+  }
+
+  /* ── 히어로 ───────────────────────────── */
+  .hero { display: grid; grid-template-columns: 1fr 290px; gap: 60px; align-items: center; padding: 56px 0 68px; }
+  h1 { font-size: 48px; line-height: 1.18; letter-spacing: -0.03em; margin: 0 0 18px; font-weight: 800; }
+  h1 .soft { color: var(--muted); font-weight: 700; }
+  .lead { font-size: 17px; color: var(--text-2); margin: 0 0 30px; max-width: 30em; }
+  .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
   .cta {
-    display: inline-block;
-    background: #f2f4f9;
-    color: #0b0f19;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    padding: 14px 26px;
-    border-radius: 999px;
+    display: inline-block; background: var(--text); color: var(--bg);
+    text-decoration: none; font-weight: 700; font-size: 16px;
+    padding: 15px 30px; border-radius: 999px;
+    transition: transform .15s ease, background .15s ease;
   }
-  .cta:hover { background: #fff; }
-  footer {
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid #1e2536;
-    font-size: 14px;
-    color: #7b849c;
+  .cta:hover { background: #fff; transform: translateY(-1px); }
+  .cta-note { font-size: 14px; color: var(--muted); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 13px; color: var(--text-2);
+    border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 5px 12px; background: var(--surface);
   }
+  .chip b { color: var(--text); font-weight: 600; }
+
+  /* 아이폰 목업 */
+  .phone {
+    border: 1px solid var(--line-2); border-radius: 34px; padding: 8px;
+    background: linear-gradient(160deg, #222b3f, #10151f);
+    box-shadow: 0 30px 70px rgba(0,0,0,.55);
+  }
+  .phone img { border-radius: 27px; height: 500px; object-fit: cover; object-position: top; }
+
+  /* ── 신뢰 띠 ───────────────────────────── */
+  .strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .strip .wrap {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; padding-top: 26px; padding-bottom: 26px;
+  }
+  .stat .n { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+  .stat .l { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ── 섹션 공통 ─────────────────────────── */
+  section { padding: 84px 0; }
+  .eyebrow { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; margin-bottom: 12px; }
+  h2 { font-size: 32px; line-height: 1.3; letter-spacing: -0.025em; margin: 0 0 14px; font-weight: 800; }
+  .sub { color: var(--text-2); font-size: 16px; margin: 0 0 40px; max-width: 34em; }
+
+  /* ── 벤토 그리드 ───────────────────────── */
+  .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; padding: 26px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .card h3 { font-size: 18px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .card p { font-size: 14.5px; color: var(--text-2); margin: 0; }
+  .card .shot {
+    margin-top: 22px; border-radius: 12px 12px 0 0;
+    border: 1px solid var(--line-2); border-bottom: 0;
+    height: 260px; width: 100%; object-fit: cover; object-position: top;
+  }
+  .card.wide { grid-column: span 2; }
+  .card.row { display: grid; grid-template-columns: 1fr 220px; align-items: center; gap: 30px; }
+  .card.row .shot { margin-top: 0; height: 300px; border-radius: 12px; border-bottom: 1px solid var(--line-2); }
+
+  /* ── 프리미엄 ─────────────────────────── */
+  .premium { background: var(--surface-2); border: 1px solid var(--line); border-radius: 18px; padding: 34px; }
+  .premium ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .premium li { font-size: 14.5px; color: var(--text-2); padding-left: 20px; position: relative; }
+  .premium li::before { content: "·"; position: absolute; left: 6px; color: var(--accent); font-weight: 800; }
+  .premium .note { font-size: 13px; color: var(--muted); margin-top: 20px; }
+
+  /* ── 만든 사람 ─────────────────────────── */
+  .maker { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+           background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+  .maker p { margin: 8px 0 0; color: var(--text-2); font-size: 15px; }
+  .maker .link {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--line-2); border-radius: 999px; padding: 12px 22px; white-space: nowrap;
+  }
+  .maker .link:hover { border-color: var(--muted); }
+
+  /* ── 푸터 ─────────────────────────────── */
+  footer { border-top: 1px solid var(--line); padding: 34px 0 56px; color: var(--muted); font-size: 14px; }
+  footer .links { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
   footer a { color: #9aa3ba; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
-  .copy { margin-top: 12px; }
-  @media (max-width: 520px) {
-    .wrap { padding: 56px 20px 48px; }
-    h1 { font-size: 32px; }
-    .tagline { font-size: 17px; }
+  .disclaimer { font-size: 12.5px; line-height: 1.65; margin-top: 16px; max-width: 46em; color: #6f7890; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 44px 0 56px; }
+    .phone { max-width: 260px; margin: 0 auto; }
+    .phone img { height: 420px; }
+    h1 { font-size: 36px; }
+    .bento { grid-template-columns: 1fr; }
+    .card.wide { grid-column: auto; }
+    .card.row { grid-template-columns: 1fr; gap: 22px; }
+    .card.row .shot { height: 240px; }
+    .card .shot { height: 220px; }
+    .strip .wrap { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .premium ul { grid-template-columns: 1fr; }
+    .maker { grid-template-columns: 1fr; }
+    section { padding: 60px 0; }
+    h2 { font-size: 26px; }
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="moon">🌙</div>
-    <h1>Lunarc</h1>
-    <p class="tagline">남은 시간을 인식하고, 오늘을 소중히.</p>
 
-    <p class="lead">
-      우리에게 주어진 시간은 유한합니다. Lunarc는 그 사실을 두려움이 아니라
-      <strong>오늘을 잘 쓰기 위한 자각</strong>으로 바꿉니다.
-      남은 시간을 눈으로 확인하고, 하루를 계획하고, 채운 시간을 흔적으로 남깁니다.
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand"><span class="m">🌙</span> Lunarc</div>
+    <a class="btn-sm" href="https://apps.apple.com/kr/app/id6769979902">App Store</a>
+  </nav>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <h1>남은 시간을 비추면<br><span class="soft">오늘이 또렷해집니다</span></h1>
+      <p class="lead">
+        우리는 시간이 무한한 듯 살아갑니다. Lunarc은 남은 시간을 가만히 비춰,
+        오늘 하루를 더 또렷하게 바라보도록 돕습니다.
+        두려움이 아니라 지금 이 순간의 소중함을 깨우는 각성입니다.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="https://apps.apple.com/kr/app/id6769979902">App Store에서 받기</a>
+        <span class="cta-note">무료 · iPhone</span>
+      </div>
+      <div class="chips">
+        <span class="chip"><b>한국어</b> · English · 日本語</span>
+        <span class="chip">버전 <b>1.4</b></span>
+        <span class="chip"><b>24.5MB</b></span>
+        <span class="chip">라이프스타일 · 생산성</span>
+      </div>
+    </div>
+    <div class="phone">
+      <img src="images/web/shot1.jpg" width="620" height="1347" alt="Lunarc 투데이 화면 — 하루 호와 오늘의 의미">
+    </div>
+  </header>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="stat"><div class="n">11개국</div><div class="l">서비스 중</div></div>
+    <div class="stat"><div class="n">3개 언어</div><div class="l">한국어 · 영어 · 일본어</div></div>
+    <div class="stat"><div class="n">무료</div><div class="l">핵심 기능 전부</div></div>
+    <div class="stat"><div class="n">1인 개발</div><div class="l">기획부터 운영까지</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="eyebrow">하루의 흐름</div>
+    <h2>지금 어디쯤 와 있는지<br>한 화면에서 느껴집니다</h2>
+    <p class="sub">
+      기상부터 취침까지 오늘 남은 시간을 <b>하루 호</b>로 그립니다.
+      지나간 시간과 남은 시간이 함께 놓여, 계획이 아니라 감각으로 하루를 붙잡습니다.
     </p>
 
-    <ul class="features">
-      <li><b>일정</b> — 하루·주·월 단위로 계획하고, 캘린더와 연동합니다.</li>
-      <li><b>챌린지</b> — 관심사가 같은 사람들과 함께 목표를 이어갑니다.</li>
-      <li><b>집중 모드</b> — 온전히 몰입한 시간을 쌓아갑니다.</li>
-      <li><b>위젯</b> — 홈 화면에서 남은 시간과 오늘 할 일을 바로 확인합니다.</li>
-      <li><b>버킷리스트</b> — 언젠가 하고 싶은 일을 미루지 않게 붙잡아 둡니다.</li>
-    </ul>
+    <div class="bento">
+      <div class="card wide row">
+        <div class="txt">
+          <h3>시간을 의미 있게 설계</h3>
+          <p>
+            일간·주간·월간 타임라인으로 일정을 직관적으로 계획합니다.
+            드래그 한 번으로 시간을 옮기고, Apple·Google 캘린더와 연동해
+            흩어진 일정을 한곳에서 봅니다.
+          </p>
+        </div>
+        <img class="shot" src="images/web/shot2.jpg" width="620" height="1080" loading="lazy" alt="주간 타임라인 스케줄 화면">
+      </div>
 
-    <a class="cta" href="https://apps.apple.com/kr/app/lunarc/id6769979902">App Store에서 받기</a>
+      <div class="card">
+        <h3>오늘의 우선순위</h3>
+        <p>중요도와 긴급도로 나눈 네 칸에 할 일을 놓습니다. 무엇을 먼저 할지가 눈에 보입니다.</p>
+        <img class="shot" src="images/web/shot5.jpg" width="620" height="1347" loading="lazy" alt="태스크 매트릭스 화면">
+      </div>
 
-    <footer>
-      <a href="https://ttd-poc-production.jakesungjaekim.workers.dev/terms">이용약관 및 지원</a>
-      <div class="copy">© 2026 빌더김성재. All rights reserved.</div>
-    </footer>
+      <div class="card">
+        <h3>한 주를 되돌아보기</h3>
+        <p>좋았던 것, 아쉬웠던 것, 새로 시도해보고 싶은 것. 매주 네 가지 질문으로 한 주를 정리합니다.</p>
+        <img class="shot" src="images/web/shot3.jpg" width="620" height="1347" loading="lazy" alt="주간 회고 화면">
+      </div>
+
+      <div class="card">
+        <h3>언젠가를 붙잡아 두기</h3>
+        <p>미루기 쉬운 일에 날짜를 붙여 둡니다. 남은 날이 함께 표시되어 잊히지 않습니다.</p>
+        <img class="shot" src="images/web/shot4.jpg" width="620" height="1347" loading="lazy" alt="버킷리스트 화면">
+      </div>
+
+      <div class="card">
+        <h3>작은 빛을 나누기</h3>
+        <p>오늘의 질문에 한 문장을 남기고, 다른 사람이 흘려보낸 짧은 통찰과 위로를 만납니다. 닉네임으로만 오갑니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="premium">
+      <div class="eyebrow">Lunarc 프리미엄</div>
+      <h2 style="font-size:24px; margin-bottom:6px;">매일 보는 화면에 남은 시간을</h2>
+      <ul>
+        <li>광고 제거 — 방해 없는 화면</li>
+        <li>잠금화면 배경화면 — 켤 때마다 오늘을</li>
+        <li>홈 화면 위젯 — 열지 않아도 한눈에</li>
+      </ul>
+      <p class="note">
+        월 구독 · 연 구독 · 평생 이용권 중 선택할 수 있습니다.
+        캘린더 연동을 비롯한 핵심 기능은 무료로 제공됩니다.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="maker">
+      <div>
+        <div class="eyebrow">만든 사람</div>
+        <h2 style="font-size:24px; margin:0;">김성재</h2>
+        <p>
+          기획 · 디자인 · 개발 · 출시 · 운영을 혼자 맡고 있습니다.
+          어떻게 만들었고 무엇을 근거로 결정했는지 따로 정리해 두었습니다.
+        </p>
+      </div>
+      <a class="link" href="me/">개발 기록 보기 →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://ttd-poc-production.jakesungjaekim.workers.dev/terms">이용약관</a>
+      <a href="https://ttd-poc-production.jakesungjaekim.workers.dev/privacy">개인정보처리방침</a>
+      <a href="https://apps.apple.com/kr/app/id6769979902">App Store</a>
+      <a href="mailto:jakesungjaekim@gmail.com">문의</a>
+    </div>
+    <div>© 2026 김성재. All rights reserved.</div>
+    <p class="disclaimer">
+      Lunarc이 보여주는 ‘남은 시간’은 통계에 기반한 참고용 추정치이며, 실제 수명을 예측하거나 보장하지 않습니다.
+      본 앱은 의료·심리 상담 서비스가 아닙니다. 마음이 힘들 때는 전문 기관의 도움을 받으시길 권합니다.
+    </p>
   </div>
+</footer>
+
 </body>
 </html>

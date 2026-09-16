@@ -470,7 +470,7 @@
 
     <div class="results">
       <div class="res"><div class="n">193<small> 항목</small></div><div class="l">자체 검증 스위트 7단계 · CI 상시 가동</div></div>
-      <div class="res"><div class="n">22 · 6 · 24</div><div class="l">훅 · 검증 에이전트 · 스킬</div></div>
+      <div class="res"><div class="n">19 · 6 · 24</div><div class="l">훅(배선 기준) · 검증 에이전트 · 스킬</div></div>
       <div class="res"><div class="n">약 56%</div><div class="l">상시 로드 토큰 절감</div></div>
       <div class="res"><div class="n">29건<small> 이상</small></div><div class="l">자체 감사로 잡은 도구 자신의 결함</div></div>
     </div>
@@ -562,8 +562,9 @@
           같은 실패가 3회 반복되면 진행을 멈춥니다. 규칙을 사람의 기억이 아니라 <b>도구가 집행하도록</b> 옮긴 것입니다.
           문서로 적어둔 규칙은 바쁠 때 가장 먼저 무시됩니다.
           <br><br>
-          훅 22종 중 <b>집행·판정 성격 8종</b>이 상시 동작하고, 차단할 때는 경고가 아니라
-          종료 코드로 진행 자체를 멈춥니다.
+          훅 19종 중 <b>차단 6종</b>(도구 호출 5 · 세션 종료 1)이 위반 시 진행을 멈추고,
+          2종은 막지 않고 경고만 주입합니다. 문체 검사처럼 결정적 판정이 어려운 것까지
+          막으면 정당한 작업이 걸리기 때문입니다.
         </div>
       </details>
       <details>

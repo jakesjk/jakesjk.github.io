@@ -461,11 +461,48 @@
 
   <section>
     <div class="eyebrow">TOOLING</div>
-    <h2>Mk — AI 코딩 에이전트를 관리하는 파이프라인</h2>
+    <h2>Mk — AI 코딩 에이전트 하네스</h2>
     <p class="sec-sub">
-      개발에 AI 코딩 도구를 주력으로 씁니다. 다만 결과물을 그대로 신뢰하지 않기 위해 검증 장치를 직접 만들었습니다.
-      훅 21종, 역할별 검증 에이전트 8종, 워크트리 자동화, 세션 간 기록 프로토콜로 구성돼 있습니다.
+      개발에 AI 코딩 도구를 주력으로 씁니다. 결과물을 그대로 신뢰하지 않기 위한 검증 장치를 직접 만들어
+      6개월 넘게 고쳐 쓰고 있습니다. 훅으로 규칙을 집행하고, 역할별 에이전트로 검토 관점을 나누고,
+      세션 사이의 맥락을 기록 규약으로 잇습니다.
     </p>
+
+    <div class="results">
+      <div class="res"><div class="n">191<small> 항목</small></div><div class="l">자체 검증 스위트 7단계 · CI 상시 가동</div></div>
+      <div class="res"><div class="n">22 · 6 · 24</div><div class="l">훅 · 검증 에이전트 · 스킬</div></div>
+      <div class="res"><div class="n">약 56%</div><div class="l">상시 로드 토큰 절감</div></div>
+      <div class="res"><div class="n">29건<small> 이상</small></div><div class="l">자체 감사로 잡은 도구 자신의 결함</div></div>
+    </div>
+
+    <div class="case" style="border-top:0; padding-top:0;">
+      <div class="num">설계 근거</div>
+      <h3>훅은 이론이 아니라 사고에서 나왔습니다</h3>
+
+      <div class="row"><div class="k">인과</div><div class="v">
+        규칙을 먼저 정해 두고 도구를 만든 것이 아니라, <b>실제로 겪은 사고를 기록한 뒤 그것이 반복되지
+        않도록 훅을 붙이는 순서</b>로 자랐습니다.
+        <table class="opt" style="margin-top:8px">
+          <tr><th>겪은 일</th><th>만들어진 규칙</th></tr>
+          <tr><td>워크트리 병합에서 파일이 누락됨</td><td>워크트리 생성·정리 절차 자동화</td></tr>
+          <tr><td>커밋은 했는데 기록이 없어 맥락이 사라짐</td><td>기록 없는 종료 차단 — 커밋을 기록으로 쳐주지 않음</td></tr>
+          <tr><td>같은 접근으로 계속 실패</td><td>동일 실패 3회에서 진행 중단</td></tr>
+          <tr><td>3주 된 요약 문서를 근거로 삼아 삭제된 기능을 현존으로 오보</td><td>현재 상태 질문은 코드를 1차 출처로</td></tr>
+        </table>
+      </div></div>
+
+      <div class="row"><div class="k">검증</div><div class="v">
+        도구 자체를 <b>191개 항목 7단계</b>로 검증합니다 — 정적 검사 35 · <b>훅 기능 69</b> ·
+        스키마 정합성 29 · 설치 19 · 교차 참조 16 · 운영 행동 15 · 런타임 통합 8.
+        CI에 걸어 두었고, 초기 108항목에서 지금까지 <b>77% 늘었습니다.</b>
+      </div></div>
+
+      <div class="row"><div class="k">한계</div><div class="v">
+        훅이 실제로 몇 번 발동하고 무엇을 막았는지는 <b>아직 수집하지 않습니다.</b>
+        그래서 "이 도구로 생산성이 얼마나 올랐다"는 말은 하지 않습니다.
+        측정 항목을 설계 단계에 넣지 않으면 나중에 소급할 수 없다는 것을 이 도구에서 배웠습니다.
+      </div></div>
+    </div>
 
     <div class="tsl">
       <details>
@@ -473,6 +510,20 @@
         <div class="body">
           변경 전 파일 확인을 강제하고, 파괴적 명령을 차단하고, 기록 없는 종료를 막고,
           같은 실패가 3회 반복되면 진행을 멈춥니다. 규칙을 사람의 기억이 아니라 <b>도구가 집행하도록</b> 옮긴 것입니다.
+          문서로 적어둔 규칙은 바쁠 때 가장 먼저 무시됩니다.
+        </div>
+      </details>
+      <details>
+        <summary>내가 만든 도구를 CI로 검증한다</summary>
+        <div class="body">
+          훅과 에이전트가 늘어날수록 서로 간섭할 여지도 늘어납니다. 그래서 도구에도 테스트를 붙여
+          <b>191개 항목</b>을 CI에서 돌립니다.
+          <br><br>
+          효과가 분명하게 드러난 적이 있습니다. CI를 처음 붙인 날 <b>이식성 결함 4종이 한꺼번에</b> 나왔는데,
+          전부 macOS에서만 돌려서는 드러나지 않던 것들이었습니다(<code>date</code>·<code>sed</code> 옵션 차이 등).
+          그중 하나는 BSD <code>sed</code>의 관대한 범위 처리 덕분에 <b>검증이 우연히 통과하고 있던</b> 상태였습니다.
+          <br><br>
+          <b>배운 것</b> — 한 환경에서만 돌리는 검증은 통과해도 통과한 게 아닙니다.
         </div>
       </details>
       <details>

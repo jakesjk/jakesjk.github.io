@@ -86,6 +86,12 @@
   .meta .v b { color: var(--text); font-weight: 600; }
 
   /* 결과 카드 */
+  .lead { font-size: 15.5px; line-height: 1.8; color: var(--text); margin: 0 0 22px; }
+  .shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 26px; }
+  .shots figure { margin: 0; }
+  .shots img { width: 100%; aspect-ratio: 620 / 1347; height: auto; object-fit: cover; object-position: top; display: block; border-radius: 12px; border: 1px solid var(--line); }
+  .shots figcaption { font-size: 12px; color: var(--muted); margin-top: 7px; text-align: center; }
+  @media (max-width: 640px) { .shots { grid-template-columns: repeat(2, 1fr); } }
   .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 40px; }
   .res {
     background: linear-gradient(180deg, var(--surface-2), var(--surface));
@@ -203,7 +209,20 @@
       LLM 기능 2종(주간 활동 분류 · 읽기 시 번역)을 직접 설계해 운영 중입니다.
     </p>
 
-    <div class="meta">
+        <div class="shots">
+      <figure><img src="../images/web/shot1.jpg" width="620" height="1347" alt="투데이 — 남은 시간과 오늘의 하루 호"><figcaption>투데이 · 남은 시간을 비춘 하루</figcaption></figure>
+      <figure><img src="../images/web/shot2.jpg" width="620" height="1080" alt="주간 타임라인 — 시간 블록으로 하루를 설계" loading="lazy"><figcaption>주간 타임라인 · 시간 블록</figcaption></figure>
+      <figure><img src="../images/web/shot3.jpg" width="620" height="1347" alt="주간 회고 — 5장면 편지" loading="lazy"><figcaption>주간 회고 · 다음 주의 나에게</figcaption></figure>
+      <figure><img src="../images/web/shot5.jpg" width="620" height="1347" alt="태스크 매트릭스" loading="lazy"><figcaption>태스크 매트릭스</figcaption></figure>
+    </div>
+    <p class="lead">
+      우리는 시간이 무한한 듯 살아갑니다. Lunarc는 남은 시간을 가만히 비춰 오늘을 또렷하게 보게 하는 앱입니다.
+      투데이 화면이 남은 날을 하루 호로 보여주고, 그 아래에서 시간 블록으로 하루를 설계합니다. 주말에는 다섯 장면으로 한 주를 되돌아보고
+      다음 주의 나에게 편지를 남깁니다. 빛 탭에서는 다른 사람의 오늘 한 줄을 하루 몇 개만 만납니다.
+      두려움이 아니라 지금 이 순간의 소중함을 깨우는 쪽으로 만들었고, 그 방향에서 어긋나는 기능은 로그를 보고 걷어냈습니다.
+    </p>
+
+<div class="meta">
       <div><div class="k">역할</div><div class="v"><b>기획 · 디자인 · 개발 · 출시 · 운영</b> 전담 (1인)</div></div>
       <div><div class="k">기간</div><div class="v">2026.03 ~ 현재 · 출시 2026.07.15</div></div>
       <div><div class="k">iOS</div><div class="v">Swift, SwiftUI, WidgetKit, StoreKit 2, Swift Testing</div></div>
@@ -211,11 +230,106 @@
     </div>
 
     <div class="results">
+      <div class="res"><div class="n">32% → 76%</div><div class="l">현지화 후 해외 유입 비중 · 3개 언어 · 11개국</div></div>
+      <div class="res"><div class="n">1,513줄</div><div class="l">실사용자 로그를 근거로 걷어낸 기능</div></div>
+      <div class="res"><div class="n">5 → 4<small> 슬롯 + 편지</small></div><div class="l">봉인을 버리고 다시 열어 고칠 수 있게 재설계한 주간 회고</div></div>
       <div class="res"><div class="n">167.7MB → 4.9MB</div><div class="l">아이콘 애셋 97.1% 절감 · 호출부 228곳 수정 0</div></div>
-      <div class="res"><div class="n">32% → 76%</div><div class="l">현지화 후 해외 유입 비중</div></div>
-      <div class="res"><div class="n">월 $0</div><div class="l">운영비 · 마이그레이션 중 중단·유실 0</div></div>
-      <div class="res"><div class="n">1,513줄</div><div class="l">사용 로그를 근거로 제거한 기능</div></div>
     </div>
+
+  </section>
+
+  <section>
+    <div class="eyebrow">DESIGN</div>
+    <h2>무엇을 왜 이렇게 만들었나</h2>
+    <p class="sec-sub">기능이 아니라 방향을 정한 결정 셋. 각각 선택지가 있었고, 고른 이유가 기록에 남아 있습니다.</p>
+
+    <div class="case">
+      <div class="num">DESIGN 01 · 메타포</div>
+      <h3>"모으는 것"을 버리고 "만나는 것"으로 — 빛 탭</h3>
+      <div class="row"><div class="k">상황</div><div class="v">
+        다른 사람의 오늘 한 줄을 보는 탭이 있었습니다. 처음 만든 형태는 <b>수집·소유</b>였습니다 — 채집한 빛과 남긴 빛을 세그먼트로 나누고 목록으로 쌓았습니다.
+        써 보니 남기려면 써야 하고, 쓰려면 부담이 생기고, 부담은 진입 장벽이 됐습니다. 일기 앱이 한 달 안에 대부분을 잃는 이유와 같은 구조였습니다.
+      </div></div>
+      <div class="row"><div class="k">선택지</div><div class="v">
+        <table class="opt" style="margin-top:8px">
+          <tr><th>안</th><th>사용자에게</th><th>정체성과</th></tr>
+          <tr><td>수집·소유 (현행)</td><td>써야 볼 수 있음 · 쌓임</td><td>맞지만 아무도 안 씀</td></tr>
+          <tr><td>무한 피드</td><td>편함 · 많음 · 자주</td><td>"시간을 의미있게"와 정면 충돌</td></tr>
+          <tr><td>만남·순간 + 한정 ←</td><td>편함 · 하루 몇 개만</td><td>한정이 정체성을 지킴</td></tr>
+        </table>
+      </div></div>
+      <div class="row"><div class="k">결정</div><div class="v">
+        <b>만남·순간 메타포, 하루 5~10개 한정, 자동 진행 없음, 작성은 선택.</b> 시안 4종을 받아 페르소나 라운드테이블 형식으로 검토했고
+        "오늘 밤의 5"라는 표현으로 합의가 났습니다. 그 뒤 양보 불가 항목 10개를 못 박았습니다 — 풀스크린 한 장에 진행 표시, 단색 배경(그라디언트 없음),
+        액션은 하트와 저장 둘뿐(댓글·공유 없음), 본문은 시스템 세리프, 하단에 "내 빛 남기기"는 항상.
+      </div></div>
+      <div class="row out"><div class="k">결과</div><div class="v">
+        탭 전면 재작성 · 무한 스크롤 없이 Stories 문법 채택 · 작성 없이도 볼 수 있는 구조
+      </div></div>
+      <div class="lesson">
+        <b>배운 것</b> — 사용자가 원하는 것(편하게·많이·자주)과 제품 정체성(시간을 의미있게)이 충돌할 때, 둘 중 하나를 버리는 게 아니라
+        <b>"한정"이라는 제3의 축</b>으로 풉니다. 하루 5개라는 숫자가 편의와 정체성을 동시에 지켰습니다.
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="num">DESIGN 02 · 플로우</div>
+      <h3>승인한 설계를 번복하다 — 주간 회고의 "봉인"</h3>
+      <div class="row"><div class="k">상황</div><div class="v">
+        설계서에는 주간 회고를 <b>봉인</b>한다고 돼 있었고 저도 승인했습니다. 저장하면 수정할 수 없게 해서 그 시점의 진심을 고정하는 의식 장치였습니다.
+        만들어 놓고 써 보니 다르게 읽혔습니다. 다시 여는 진입이 약해서 "봉인"이 아니라 <b>"다시 볼 수 없다"</b>로 느껴졌습니다. 의식이 상실이 됐습니다.
+      </div></div>
+      <div class="row"><div class="k">결정</div><div class="v">
+        승인했던 결정을 번복했습니다. 봉인을 버리고 <b>저장 → 다시 열람 → 수정</b>, 일간 회고와 같은 관용으로. 흐름도 다시 짰습니다.
+        <ul>
+          <li>장면을 다섯으로 — 좋았던 것 · 아쉬웠던 것 · 시도해보고 싶었던 것 · 개선해 볼 것 · <b>다음 주의 나에게 쓰는 편지</b></li>
+          <li>흐름을 끊던 "계획된 일정 확인" 장면과 "이 주의 기록" 타일은 삭제</li>
+          <li>한 줄 입력칸을 여러 줄로 — 한 줄은 회고를 쓰기엔 너무 좁았습니다</li>
+          <li>문안 규율 — "좋았던 것" 단독 금지, 전부 "이번 한 주의 ○○" 형태로</li>
+        </ul>
+        같은 날 실제 사고도 잡았습니다. 리추얼 요일을 화요일로 옮겼는데 카드가 지난 캘린더 주를 가리켰습니다.
+        주 경계가 일~토 고정이었기 때문입니다. <b>회고 주 = 리추얼 요일 기준 앞 7일</b>로 바꿔 요일과 주가 분리되지 않게 했습니다.
+      </div></div>
+      <div class="row out"><div class="k">결과</div><div class="v">
+        5장면 4슬롯 + 편지 · 저장 후 수정 가능 · 구버전 저장분(자유문·KPT) 판독은 유지
+      </div></div>
+      <div class="lesson">
+        <b>배운 것</b> — 설계서에 이유가 있어도 사용자에게 그 이유가 전달되지 않으면 <b>의식은 상실로 읽힙니다.</b>
+        승인한 결정을 번복하는 비용보다, 다시 못 보는 회고를 남기는 비용이 컸습니다. 번복은 설계서까지 같이 고쳐야 번복입니다.
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="num">DESIGN 03 · 색 · 결정, 구현 전</div>
+      <h3>다크를 뒤집으면 라이트가 되지 않는다</h3>
+      <div class="row"><div class="k">상황</div><div class="v">
+        앱은 다크 한 가지였습니다. 라이트 모드를 준다면 색을 어떻게 구성할지 정해야 했습니다.
+        배경만 뒤집어 보니 안 됐습니다 — 성공 초록 <b>#1DB954</b>는 흰 배경 위에서 대비 <b>2.59:1</b>, 프리셋 12색 중 <b>9색이 4.5:1 미달</b>,
+        하드코딩된 <code>Color.white</code>가 <b>288곳 · 60파일</b>이었습니다.
+      </div></div>
+      <div class="row"><div class="k">과정</div><div class="v">
+        외부 사례 10건을 리서치하고 3안(Paper · Clean · Moonlit)을 받았습니다. 대비는 눈으로 보지 않고 <b>스크립트로 독립 검산</b>했습니다.
+        원칙 넷이 나왔습니다 — 액센트를 채움용과 글자용 두 토큰으로 나눈다 · hue는 고정하고 명도만 옮긴다 ·
+        중립은 틴트 캔버스 위 흰 카드(Apple grouped 패턴) · 다크의 "밝게 틴트"를 라이트에선 "캔버스를 낮추고 카드를 희게"로 부호만 뒤집는다.
+      </div></div>
+      <div class="row"><div class="k">결정</div><div class="v">
+        <b>C Moonlit.</b> 배경 #F3F4F9(남청 4% 틴트) · 카드 #FFFFFF · 헤어라인 #E1E3EE · 잉크 #14142A. 양보 불가는 하나 — 배경의 남청 hue.
+        회색 #F2F2F7로 타협하면 다른 안이 됩니다. 빛 탭 4개 화면은 다크 고정으로 남기고, 테마를 셋으로 늘리지 않습니다.
+        구현 착수는 로드맵 판단으로 보류했습니다 — 토큰 치환 범위가 커서 별도 PR 분해가 필요합니다.
+      </div></div>
+      <div class="row out"><div class="k">결과</div><div class="v">
+        3안 WCAG 검산 완료 · 토큰 표 확정 · 착수 시 Must(중립 9 + 액센트 2) → Nice(프리셋 틴트) 순서까지
+      </div></div>
+      <div class="lesson">
+        <b>배운 것</b> — 라이트 모드는 다크의 반전이 아니라 <b>재설계</b>입니다. 그리고 색 대비는 취향이 아니라 숫자라, 판정을 눈에 맡기지 않고 스크립트에 맡겼습니다.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">ENGINEERING · VERIFICATION</div>
+    <h2>어떻게 만들고, 돌아간다는 걸 어떻게 확인했나</h2>
+    <p class="sec-sub">위에서 정한 것을 실제로 굴리며 생긴 결정과 사고, 그리고 그것을 잡은 장치들입니다.</p>
 
     <!-- 01 -->
     <div class="case">

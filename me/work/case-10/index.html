@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko" data-base="/me/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>교차 검증 · 자동 검증을 전부 통과한 PR 11건을 모델을 바꿔 다시 읽었다 · 김성재</title>
+<meta name="description" content="빌드 · 테스트 · 심볼 대조를 통과한 PR 11건(#429~#439)이 있었습니다. 세 겹을 통과해도 결함이 남는다고 봤고 같은 모델은 같은 맹점을 반복하므로 검토자 모델을 바꿔 처음부터 다시 읽는 라운드를 두었습니다. 전제는 &quot;의심하되 무죄도 기록한다&quot;였습니다.">
+<link rel="canonical" href="https://jakesjk.github.io/me/work/case-10/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="교차 검증 · 자동 검증을 전부 통과한 PR 11건을 모델을 바꿔 다시 읽었다 · 김성재">
+<meta property="og:description" content="빌드 · 테스트 · 심볼 대조를 통과한 PR 11건(#429~#439)이 있었습니다. 세 겹을 통과해도 결함이 남는다고 봤고 같은 모델은 같은 맹점을 반복하므로 검토자 모델을 바꿔 처음부터 다시 읽는 라운드를 두었습니다. 전제는 &quot;의심하되 무죄도 기록한다&quot;였습니다.">
+<meta property="og:url" content="https://jakesjk.github.io/me/work/case-10/">
+<meta property="og:image" content="https://jakesjk.github.io/me/assets/og.jpg?v=20261003">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nanum+Pen+Script&family=Geist+Mono:wght@400;500&family=Nanum+Gothic+Coding&display=swap">
+<style>@font-face{font-family:"Pretendard Variable";font-weight:45 920;font-style:normal;font-display:swap;src:url(/me/assets/pretendard-subset.woff2?v=20261003) format("woff2-variations"),url(/me/assets/pretendard-subset.woff2?v=20261003) format("woff2")}html,body{margin:0;background:#fbfbfa}</style>
+<link rel="stylesheet" href="/me/assets/site.css?v=20261003">
+<script src="/me/assets/site.js?v=20261003" defer></script>
+</head>
+<body>
+<div data-route="/work/case-10" data-role="ax" data-sl="1" class="s nosbar"><main style="--hi:var(--t-verify)"><a class="back" href="/me/work/"><span aria-hidden="true">‹</span><span>포트폴리오</span></a><div class="case"><article class="case-frame"><span class="case-tag" style="background:var(--t-verify)">검증 / AI / 교차 검증</span><div class="case-in"><h1 class="case-h"><span>교차 검증</span><span>자동 검증을 전부 통과한 PR 11건을 모델을 바꿔 다시 읽었다</span></h1><div class="info"><div class="info-c"><p class="info-l">구분</p><p class="info-v">CASE 10 · 교차 검증</p><p class="info-s">교차 검증 · 검토자 모델 교체</p></div><div class="info-c"><p class="info-l">상태</p><p class="info-v">수정 완료</p><p class="info-s">2026</p></div><div class="info-c"><p class="info-l">역할</p><p class="info-v">설계 · 판정 · 운영</p><p class="info-s">코드는 AI</p></div><div class="info-c"><p class="info-l">분야</p><p class="info-v">검증 + AI</p><p class="info-s">교차 검토 · UGC · 이중 렌더</p></div></div><figure class="case-hero"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><div class="ch-in"><div class="sv" style="--c:var(--t-verify)"><div class="sv-top"><span>CASE-10</span><span>검증</span></div><div class="sv-mid"><p class="sv-v">11건</p><p class="sv-d">다시 읽은 PR #429~#439</p></div></div></div></figure><section class="case-sec"><p class="sec-l">개요</p><h2 class="sec-t">교차 검증</h2><div class="sec-b"><p>빌드 · 테스트 · 심볼 대조를 통과한 PR 11건(#429~#439)이 있었습니다. 세 겹을 통과해도 결함이 남는다고 봤고 같은 모델은 같은 맹점을 반복하므로 검토자 모델을 바꿔 처음부터 다시 읽는 라운드를 두었습니다. 전제는 &quot;의심하되 무죄도 기록한다&quot;였습니다.</p></div></section><section class="case-sec"><p class="sec-l">01</p><h2 class="sec-t">결과</h2><div class="sec-b"><div><b>무죄 4건.</b> 위젯 갱신 경로 교체, 욕설 필터의 쓰기 경로 커버리지, 2월 29일 나이 계산, 빌드 스크립트. 의심했으나 코드로 반증됐고 그 근거를 남겼습니다</div><div><b>신규 결함 1(P1).</b> 닉네임 변경 API가 <b>길이 검증만</b> 하고 있었습니다. 닉네임은 카드와 참가자 목록에 공개 노출되는 UGC라 욕설·태그가 그대로 나갑니다. 필터는 있었지만 다른 두 경로에만 붙어 있었습니다. sanitize + 욕설 필터 + 테스트로 수정(#440)</div><div><b>신규 결함 2(P2).</b> iOS 캘린더 계정의 Gmail과 앱의 Google 직접 연동을 둘 다 켜면 같은 이벤트가 <b>타임라인에 두 번</b> 그려집니다. 직전 PR이 선택 화면에서 Gmail 그룹을 숨겨 끌 수단까지 사라진 상태였습니다. 데이터 층에서 외부 소스를 제외해 화면과 기준을 일치시켰습니다(#441)</div><div><b>한계 기록 1.</b> 인증 미들웨어 테스트가 계약을 재현하는 방식이라 리팩터 시 이탈을 못 잡습니다. 고치지 않고 승격 조건과 함께 적어 두었습니다</div></div></section><section class="case-sec" data-progress-end><p class="sec-l">기록</p><h2 class="sec-t">잰 숫자와 출처</h2><ul class="rec"><li><p class="rk">측정 · PR 기록</p><p class="rv"><b>11건</b>다시 읽은 PR #429~#439</p></li><li><p class="rk">측정 · 검토 기록</p><p class="rv"><b>4</b>무죄로 기록한 의심</p></li><li><p class="rk">측정 · PR 기록</p><p class="rv"><b>2</b>신규 결함 P1 · P2 · #440 · #441로 수정</p></li><li><p class="rk">측정 · 검토 기록</p><p class="rv"><b>1</b>고치지 않고 적어 둔 한계</p></li><li><p class="rk">결과</p><p class="rv">PR 11건 재검토 · 무죄 4 · 신규 결함 2(UGC 모더레이션 공백 · 일정 이중 렌더) · 둘 다 후속 PR로 수정</p></li><li><p class="rk">배운 것</p><p class="rv">자동 검증은 &quot;있어야 할 것이 있는가&quot;를 봅니다. 두 결함은 둘 다 있어야 할 것이 다른 경로에만 있던 경우였고 그건 규칙보다 눈이 잡습니다. 검토자를 바꾸는 것이 가장 싼 독립성이었습니다.</p></li></ul></section><nav class="pn" aria-label="이전 · 다음"><a class="pill" href="/me/work/case-09/">‹ 이전 · 부하 한계</a><a class="pill" href="/me/work/case-04/">다음 › · 현지화</a></nav></div></article></div><section class="chat-wrap" aria-labelledby="chat-h"><span class="card-tag chat-t">연락</span><div class="chat"><figure class="chat-ph"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><img src="/me/assets/img/photo.jpg" alt="김성재 사진" loading="lazy"></figure><div class="chat-tx"><h2 class="chat-h" id="chat-h">함께 일할 팀을 찾고 있습니다</h2><p class="chat-sub">AI 엔지니어 · AX 엔지니어 정규직 포지션에 지원하고 있습니다. 편하게 메일 주세요.</p><div class="chat-l"><a class="pill dk" href="mailto:jakesungjaekim@gmail.com">이메일 보내기</a><a class="pill" href="https://github.com/jakesjk">GitHub</a><a class="pill" href="/me/resume/">이력서</a><a class="pill" href="/me/resume/pdf/" data-pdf>PDF</a></div></div></div></section><div class="foot-sp"></div></main></div>
+</body>
+</html>

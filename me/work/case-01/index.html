@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko" data-base="/me/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>백엔드 이관 · 출시를 미루고 백엔드를 전면 이관하다 · 김성재</title>
+<meta name="description" content="Spring Boot + PostgreSQL 구성은 상시 인스턴스가 필요해 사용자가 없는 시점에도 고정비가 들고 무료 티어에서는 콜드스타트가 발생했습니다. 출시를 앞둔 시점이었습니다.">
+<link rel="canonical" href="https://jakesjk.github.io/me/work/case-01/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="백엔드 이관 · 출시를 미루고 백엔드를 전면 이관하다 · 김성재">
+<meta property="og:description" content="Spring Boot + PostgreSQL 구성은 상시 인스턴스가 필요해 사용자가 없는 시점에도 고정비가 들고 무료 티어에서는 콜드스타트가 발생했습니다. 출시를 앞둔 시점이었습니다.">
+<meta property="og:url" content="https://jakesjk.github.io/me/work/case-01/">
+<meta property="og:image" content="https://jakesjk.github.io/me/assets/og.jpg?v=20261003">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nanum+Pen+Script&family=Geist+Mono:wght@400;500&family=Nanum+Gothic+Coding&display=swap">
+<style>@font-face{font-family:"Pretendard Variable";font-weight:45 920;font-style:normal;font-display:swap;src:url(/me/assets/pretendard-subset.woff2?v=20261003) format("woff2-variations"),url(/me/assets/pretendard-subset.woff2?v=20261003) format("woff2")}html,body{margin:0;background:#fbfbfa}</style>
+<link rel="stylesheet" href="/me/assets/site.css?v=20261003">
+<script src="/me/assets/site.js?v=20261003" defer></script>
+</head>
+<body>
+<div data-route="/work/case-01" data-role="ax" data-sl="1" class="s nosbar"><main style="--hi:var(--t-eng)"><a class="back" href="/me/work/"><span aria-hidden="true">‹</span><span>포트폴리오</span></a><div class="case"><article class="case-frame"><span class="case-tag" style="background:var(--t-eng)">엔지니어링 / 운영 / 백엔드 이관</span><div class="case-in"><h1 class="case-h"><span>백엔드 이관</span><span>출시를 미루고 백엔드를 전면 이관하다</span></h1><div class="info"><div class="info-c"><p class="info-l">구분</p><p class="info-v">CASE 01 · 인프라</p><p class="info-s">인프라 · Cloudflare Workers + D1</p></div><div class="info-c"><p class="info-l">상태</p><p class="info-v">완료 · 운영 중</p><p class="info-s">2026</p></div><div class="info-c"><p class="info-l">역할</p><p class="info-v">설계 · 판정 · 운영</p><p class="info-s">코드는 AI</p></div><div class="info-c"><p class="info-l">분야</p><p class="info-v">엔지니어링 + 운영</p><p class="info-s">이관 · 고정비 · 단계 검증</p></div></div><figure class="case-hero"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><div class="ch-in"><div class="sv" style="--c:var(--t-eng)"><div class="sv-top"><span>CASE-01</span><span>엔지니어링</span></div><div class="sv-mid"><p class="sv-v">$0</p><p class="sv-d">월 운영비</p></div></div></div></figure><section class="case-sec"><p class="sec-l">개요</p><h2 class="sec-t">백엔드 이관</h2><div class="sec-b"><p>Spring Boot + PostgreSQL 구성은 상시 인스턴스가 필요해 사용자가 없는 시점에도 고정비가 들고 무료 티어에서는 콜드스타트가 발생했습니다. 출시를 앞둔 시점이었습니다.</p></div></section><section class="case-sec"><p class="sec-l">01</p><h2 class="sec-t">선택지</h2><div class="sec-b"><div><table class="opt"> <tr><th>안</th><th>비용</th><th>리스크</th></tr> <tr><td>현행 유지 후 출시</td><td>즉시 출시 가능</td><td>고정비 지속 · 콜드스타트 잔존</td></tr> <tr><td>BaaS 전환</td><td>구현량 최소</td><td>인증·결제 로직이 벤더에 종속</td></tr> <tr class="pick"><td>Cloudflare Workers + D1</td><td><b>출시 2~4개월 지연</b></td><td>엣지 런타임 제약 · 이관 중 데이터 유실</td></tr> </table></div></div></section><section class="case-sec"><p class="sec-l">02</p><h2 class="sec-t">결정</h2><div class="sec-b"><div>지연을 감수하고 이관을 택했습니다. 근거는 둘이었습니다. ① 사용자가 늘수록 고정비 구조가 불리해진다 ② 인증·영수증 검증처럼 핵심 로직은 직접 통제하고 싶었다. <b>지연 자체를 비용으로 명시하고 비교한 뒤</b> 골랐습니다.</div></div></section><section class="case-sec"><p class="sec-l">03</p><h2 class="sec-t">실행</h2><div class="sec-b"><div>14개 모듈을 한 번에 옮기지 않고 <b>모듈 단위로 단계 이관</b>했습니다. 모듈마다 설계 검토 → 구현 → 성능·한계 검토 → 코드리뷰 → 테스트 → 수동 검증을 통과해야 다음으로 넘어갔습니다.</div></div></section><section class="case-sec" data-progress-end><p class="sec-l">기록</p><h2 class="sec-t">잰 숫자와 출처</h2><ul class="rec"><li><p class="rk">측정 · 사례 기록</p><p class="rv"><b>$0</b>월 운영비</p></li><li><p class="rk">측정 · 이관 기록</p><p class="rv"><b>14개</b>모듈 단위로 단계 이관</p></li><li><p class="rk">측정 · 사례 기록</p><p class="rv"><b>0</b>이관 중 서비스 중단</p></li><li><p class="rk">측정 · 사례 기록</p><p class="rv"><b>0</b>데이터 유실</p></li><li><p class="rk">결과</p><p class="rv">운영비 월 $0 유지 · 이관 중 서비스 중단 0 · 데이터 유실 0</p></li><li><p class="rk">배운 것</p><p class="rv">&quot;더 나은 기술&quot;이라서 옮긴 게 아닙니다. 옮기지 않았을 때 나중에 치를 비용이 지금 치를 지연보다 크다고 계산했기 때문입니다. 기술 선택을 설명할 때는 장점보다 비교 대상과 감수한 손해를 말해야 한다고 생각합니다.</p></li></ul></section><nav class="pn" aria-label="이전 · 다음"><a class="pill" href="/me/work/case-07/">‹ 이전 · 번역 모델 선정</a><a class="pill" href="/me/work/case-02/">다음 › · 기능 제거</a></nav></div></article></div><section class="chat-wrap" aria-labelledby="chat-h"><span class="card-tag chat-t">연락</span><div class="chat"><figure class="chat-ph"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><img src="/me/assets/img/photo.jpg" alt="김성재 사진" loading="lazy"></figure><div class="chat-tx"><h2 class="chat-h" id="chat-h">함께 일할 팀을 찾고 있습니다</h2><p class="chat-sub">AI 엔지니어 · AX 엔지니어 정규직 포지션에 지원하고 있습니다. 편하게 메일 주세요.</p><div class="chat-l"><a class="pill dk" href="mailto:jakesungjaekim@gmail.com">이메일 보내기</a><a class="pill" href="https://github.com/jakesjk">GitHub</a><a class="pill" href="/me/resume/">이력서</a><a class="pill" href="/me/resume/pdf/" data-pdf>PDF</a></div></div></div></section><div class="foot-sp"></div></main></div>
+</body>
+</html>

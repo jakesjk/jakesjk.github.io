@@ -366,4 +366,21 @@ a.lu-c:hover{box-shadow:0 0 0 1.5px var(--ink),0 12px 28px rgba(0,0,0,.06)}
 .sh-note{max-width:760px;margin-top:6px}
 @media (max-width:760px){ .mk-log li{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px} .mk-log li i{grid-column:1/-1;order:3} .mk-lh{flex-direction:column}
  .mk-inc .tr,.mk-aud .tr,.sh-gd .tr,.sh-ab .tr{grid-template-columns:minmax(0,1fr)} .mk-gr{grid-template-columns:minmax(0,1fr)} }
+/* TL;DR 3카드(10-03) */
+.tl{margin-top:56px} .tl-k{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--hi,var(--acc))}
+.tl-g{margin-top:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tl-c{display:grid;gap:10px;align-content:start;padding:22px 24px;border-radius:18px;background:color-mix(in srgb,var(--hi,var(--acc)) 5%,#fff);box-shadow:0 0 0 1px var(--line)}
+.tl-t{font-size:17px;font-weight:700;color:var(--hi,var(--acc))} .tl-b{font-family:var(--body);font-size:15px;line-height:1.75;color:var(--ink2)}
+.tl-b mark{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--hi,var(--acc)) 20%,transparent) 0);color:var(--ink);font-weight:600}
+@media (max-width:760px){ .tl-g{grid-template-columns:minmax(0,1fr)} }
+/* 전후 비교(10-03, 이전 판은 흑백) */
+.ba{margin-top:24px;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:24px;align-items:start;padding:28px;border-radius:20px;background:color-mix(in srgb,var(--hi,var(--acc)) 4%,#fff);box-shadow:0 0 0 1px var(--line)}
+.ba-c{display:grid;gap:14px;justify-items:center}
+.ba-ph{width:min(240px,100%);aspect-ratio:560/1235;border-radius:26px;overflow:hidden;background:#0c0c10;box-shadow:0 14px 30px rgba(0,0,0,.14),0 0 0 1px var(--line)} .ba-ph img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.ba-old .ba-ph img{filter:grayscale(1);opacity:.8}
+.ba-c figcaption{max-width:300px;font-family:var(--body);font-size:14px;line-height:1.7;color:var(--ink2)} .ba-c figcaption b{display:block;margin-bottom:4px;font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.ba-new figcaption b{color:var(--hi,var(--acc))}
+.ba-ar{align-self:center;font-style:normal;font-size:28px;color:var(--ink)}
+.ba-n{margin-top:10px;font-size:12.5px;color:var(--mute)}
+@media (max-width:760px){ .ba{grid-template-columns:minmax(0,1fr);padding:20px} .ba-ar{transform:rotate(90deg);justify-self:center} }
 .sv{container-type:size;width:100%;height:100%;display:grid;grid-template-rows:auto 1fr auto;padding:5.5cqmin 6cqmin;background:color-mix(in srgb,var(--c) 9%,#fff);color:var(--ink)}.sv-top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:clamp(9px,3cqmin,13px);color:color-mix(in srgb,var(--c) 80%,#000)}.sv-mid{align-self:center} .sv-v{font-size:clamp(22px,17cqmin,120px);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--c);white-space:nowrap} .sv-d{margin-top:2.6cqmin;font-family:var(--body);font-size:clamp(10px,3.6cqmin,17px);line-height:1.45;color:var(--ink2);max-width:36ch}.sv-ch{height:26cqh;display:flex;gap:4cqmin;align-items:stretch} .sv-b{flex:1;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:6px} .sv-b i{align-self:end;display:block;border-radius:4px 4px 0 0;background:var(--c);opacity:.85}.sv-b span{font-family:var(--mono);font-size:clamp(8px,2.4cqmin,11px);text-align:center;color:var(--ink2)} @container (max-width:300px){.sv-ch,.sv-d{display:none}}

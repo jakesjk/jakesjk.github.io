@@ -2,6 +2,21 @@
    시안 전용(비교 컨트롤 · 직무 전환 · DOM 대조 · shadow DOM · 해시 라우터)은 없다. 본문은 HTML에 이미 있고 JS는 연출만 맡는다. */
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 이력서 PDF 쪽 넘김(보기 전용): 이전 · 다음 · 키보드 좌우 · 스와이프 · 한 쪽씩/전체
+  (function pager() {
+    var pv = document.querySelector('.pv'); if (!pv) return;
+    var pgs = pv.querySelectorAll('.pv-pg'), th = pv.querySelectorAll('.pv-th button'), n = pv.querySelector('.pv-n'), cur = 0;
+    function show(i) { cur = Math.max(0, Math.min(pgs.length - 1, i)); pgs.forEach(function (p, k) { p.classList.toggle('on', k === cur); }); th.forEach(function (b, k) { if (k === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+      n.textContent = (cur + 1) + ' / ' + pgs.length; pv.querySelector('[data-pv="prev"]').disabled = cur === 0; pv.querySelector('[data-pv="next"]').disabled = cur === pgs.length - 1; }
+    function mode(m) { pv.setAttribute('data-mode', m); pv.querySelectorAll('[data-pv="one"],[data-pv="all"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-pv') === m)); }); }
+    pv.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var a = b.getAttribute('data-pv');
+      if (a === 'prev') show(cur - 1); else if (a === 'next') show(cur + 1); else if (a === 'one' || a === 'all') mode(a); else if (b.hasAttribute('data-go')) show(+b.getAttribute('data-go'));
+      if (a === 'prev' || a === 'next' || b.hasAttribute('data-go')) scrollTo({ top: 0 }); });
+    document.addEventListener('keydown', function (e) { if (pv.getAttribute('data-mode') !== 'one') return; if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+    var sx = null; pv.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true }); pv.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+    show(0);
+  })();
+
   var sroot = document.querySelector('.s'); if (!sroot) return;
   sroot.classList.add('js');
   var BASE = document.documentElement.getAttribute('data-base') || '/me/';

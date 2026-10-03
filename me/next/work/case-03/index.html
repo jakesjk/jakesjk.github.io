@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko" data-base="/me/next/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>저장 구조 · 사고를 계기로 저장 구조 자체를 다시 설계하다 · 김성재</title>
+<meta name="description" content="운영 환경에서 일정이 중복 생성되는 사고 가 발생했습니다(레코드 4건).">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="저장 구조 · 사고를 계기로 저장 구조 자체를 다시 설계하다 · 김성재">
+<meta property="og:description" content="운영 환경에서 일정이 중복 생성되는 사고 가 발생했습니다(레코드 4건).">
+<meta property="og:url" content="https://jakesjk.github.io/me/next/work/case-03/">
+<meta property="og:image" content="https://jakesjk.github.io/me/next/assets/og.jpg?v=20261003">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nanum+Pen+Script&family=Geist+Mono:wght@400;500&family=Nanum+Gothic+Coding&display=swap">
+<style>@font-face{font-family:"Pretendard Variable";font-weight:45 920;font-style:normal;font-display:swap;src:url(/me/next/assets/pretendard-subset.woff2?v=20261003) format("woff2-variations"),url(/me/next/assets/pretendard-subset.woff2?v=20261003) format("woff2")}html,body{margin:0;background:#fbfbfa}</style>
+<link rel="stylesheet" href="/me/next/assets/site.css?v=20261003">
+<script src="/me/next/assets/site.js?v=20261003" defer></script>
+</head>
+<body>
+<div data-route="/work/case-03" data-role="ax" data-sl="1" class="s nosbar"><main style="--hi:var(--t-eng)"><a class="back" href="/me/next/work/"><span aria-hidden="true">‹</span><span>포트폴리오</span></a><div class="case"><article class="case-frame"><span class="case-tag" style="background:var(--t-eng)">엔지니어링 / 저장 구조</span><div class="case-in"><h1 class="case-h"><span>저장 구조</span><span>사고를 계기로 저장 구조 자체를 다시 설계하다</span></h1><div class="info"><div class="info-c"><p class="info-l">구분</p><p class="info-v">CASE 03 · 아키텍처</p><p class="info-s">아키텍처 · 오프라인 큐</p></div><div class="info-c"><p class="info-l">상태</p><p class="info-v">완료 · 운영 중</p><p class="info-s">2026</p></div><div class="info-c"><p class="info-l">역할</p><p class="info-v">설계 · 판정 · 운영</p><p class="info-s">코드는 AI</p></div><div class="info-c"><p class="info-l">분야</p><p class="info-v">엔지니어링</p><p class="info-s">멱등 키 · 유니크 제약 · 로컬 정본</p></div></div><figure class="case-hero"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><div class="ch-in"><div class="sv" style="--c:var(--t-eng)"><div class="sv-top"><span>CASE-03</span><span>엔지니어링</span></div><div class="sv-mid"><p class="sv-v">4건</p><p class="sv-d">중복 생성된 레코드</p></div></div></div></figure><section class="case-sec"><p class="sec-l">개요</p><h2 class="sec-t">저장 구조</h2><div class="sec-b"><p>운영 환경에서 일정이 중복 생성되는 사고 가 발생했습니다(레코드 4건).</p></div></section><section class="case-sec"><p class="sec-l">01</p><h2 class="sec-t">원인</h2><div class="sec-b"><div>로그인 세션 만료를 앱이 <b>"오프라인 상태"로 잘못 분류</b>하고 있었습니다. 그 상태에서 만든 일정이 오프라인 큐에 쌓였고 재로그인 시 큐가 일괄 재전송되며 같은 일정이 다시 생성됐습니다.</div></div></section><section class="case-sec"><p class="sec-l">02</p><h2 class="sec-t">결정</h2><div class="sec-b"><div>큐 로직만 고치지 않고 <b>비로그인 사용자의 저장 모델 자체를 바꿨습니다.</b> 비로그인 상태에서는 로컬 저장소를 정본으로 삼아 서버 통신을 아예 하지 않고 로그인 순간에만 1회 병합합니다.</div><div>인증 오류와 오프라인을 <b>분리.</b> 만료 시 "다시 로그인" 안내</div><div>생성 요청에 멱등 키 동봉 + DB 유니크 제약으로 <b>중복을 구조적으로 차단</b></div><div>기존 큐를 재활용하지 않음. 재전송 대기열을 저장소로 남용한 것이 사고 원인이었기 때문</div></div></section><section class="case-sec" data-progress-end><p class="sec-l">기록</p><h2 class="sec-t">잰 숫자와 출처</h2><ul class="rec"><li><p class="rk">측정 · 사고 기록</p><p class="rv"><b>4건</b>중복 생성된 레코드</p></li><li><p class="rk">측정 · 설계</p><p class="rv"><b>0회</b>게스트 구간 서버 통신</p></li><li><p class="rk">측정 · 설계</p><p class="rv"><b>1회</b>로그인 순간 병합</p></li><li><p class="rk">결과</p><p class="rv">가입 없이 핵심 기능 사용 가능 · 게스트 구간 서버 통신 0회 · 중복 생성 원천 차단</p></li><li><p class="rk">배운 것</p><p class="rv">표면 원인은 큐였지만 진짜 원인은 &quot;임시 저장&quot;과 &quot;재전송 대기열&quot;을 같은 저장소로 쓴 설계 였습니다. 증상을 막는 수정과 원인을 없애는 수정은 다르다는 걸 이 건에서 배웠습니다.</p></li></ul></section><nav class="pn" aria-label="이전 · 다음"><a class="pill" href="/me/next/work/case-02/">‹ 이전 · 기능 제거</a><a class="pill" href="/me/next/work/case-08/">다음 › · 재시도 비용</a></nav></div></article></div><section class="chat-wrap" aria-labelledby="chat-h"><span class="card-tag chat-t">연락</span><div class="chat"><figure class="chat-ph"><span class="hd hd1"></span><span class="hd hd2"></span><span class="hd hd3"></span><span class="hd hd4"></span><img src="/me/next/assets/img/photo.jpg" alt="김성재 사진" loading="lazy"></figure><div class="chat-tx"><h2 class="chat-h" id="chat-h">함께 일할 팀을 찾고 있습니다</h2><p class="chat-sub">AI 엔지니어 · AX 엔지니어 정규직 포지션에 지원하고 있습니다. 편하게 메일 주세요.</p><div class="chat-l"><a class="pill dk" href="mailto:jakesungjaekim@gmail.com">이메일 보내기</a><a class="pill" href="https://github.com/jakesjk">GitHub</a><a class="pill" href="/me/next/resume/">이력서</a><a class="pill" href="/me/next/resume/" data-pdf>PDF</a></div></div></div></section><div class="foot-sp"></div></main></div>
+</body>
+</html>

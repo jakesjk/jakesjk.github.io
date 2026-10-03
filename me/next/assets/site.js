@@ -2,24 +2,36 @@
    시안 전용(비교 컨트롤 · 직무 전환 · DOM 대조 · shadow DOM · 해시 라우터)은 없다. 본문은 HTML에 이미 있고 JS는 연출만 맡는다. */
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var BASE = document.documentElement.getAttribute('data-base') || '/me/';
   // 이력서 PDF 쪽 넘김(보기 전용): 이전 · 다음 · 키보드 좌우 · 스와이프 · 한 쪽씩/전체
   (function pager() {
     var pv = document.querySelector('.pv'); if (!pv) return;
     var pgs = pv.querySelectorAll('.pv-pg'), th = pv.querySelectorAll('.pv-th button'), n = pv.querySelector('.pv-n'), cur = 0;
-    function show(i) { cur = Math.max(0, Math.min(pgs.length - 1, i)); pgs.forEach(function (p, k) { p.classList.toggle('on', k === cur); }); th.forEach(function (b, k) { if (k === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    function show(i) { cur = Math.max(0, Math.min(pgs.length - 1, i)); pgs.forEach(function (p, k) { p.classList.toggle('on', k === cur); }); th.forEach(function (b, k) { if (k === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
       n.textContent = (cur + 1) + ' / ' + pgs.length; pv.querySelector('[data-pv="prev"]').disabled = cur === 0; pv.querySelector('[data-pv="next"]').disabled = cur === pgs.length - 1; }
     function mode(m) { pv.setAttribute('data-mode', m); pv.querySelectorAll('[data-pv="one"],[data-pv="all"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-pv') === m)); }); }
     pv.addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; var a = b.getAttribute('data-pv');
       if (a === 'prev') show(cur - 1); else if (a === 'next') show(cur + 1); else if (a === 'one' || a === 'all') mode(a); else if (b.hasAttribute('data-go')) show(+b.getAttribute('data-go'));
       if (a === 'prev' || a === 'next' || b.hasAttribute('data-go')) scrollTo({ top: 0 }); });
     document.addEventListener('keydown', function (e) { if (pv.getAttribute('data-mode') !== 'one') return; if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
-    var sx = null; pv.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true }); pv.addEventListener('touchend', function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
-    show(0);
+    var sx = null, sy = null; pv.addEventListener('touchstart', function (e) { if (e.touches.length > 1) { sx = null; return; } sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true }); pv.addEventListener('touchend', function (e) { if (sx === null || pv.getAttribute('data-mode') !== 'one') { sx = null; return; } var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(cur + (dx < 0 ? 1 : -1)); sx = null; });
+    mode('one'); show(0);
+  })();
+
+  // 상세 페이지 뒤로 버튼: 이 사이트에서 왔으면 브라우저 뒤로(위치 복원) + 앞 페이지 이름
+  (function back() {
+    var b = document.querySelector('a.back'); if (!b) return;
+    var ref = null; try { ref = document.referrer ? new URL(document.referrer) : null; } catch (e) {}
+    if (!ref || ref.origin !== location.origin || ref.pathname.indexOf(BASE) !== 0 || ref.pathname === location.pathname) return;
+    if (history.length < 2) return;   // 새 탭으로 열었으면 이름도 이동도 기본값(상위 목록)
+    var p = ref.pathname.slice(BASE.length).replace(/\/$/, '');
+    var NAMES = { '': '홈', 'work': '포트폴리오', 'projects': '프로젝트', 'resume': '이력서' };
+    var lab = b.querySelector('span:last-child'); if (lab) lab.textContent = NAMES[p] || '이전 페이지';
+    b.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
   })();
 
   var sroot = document.querySelector('.s'); if (!sroot) return;
   sroot.classList.add('js');
-  var BASE = document.documentElement.getAttribute('data-base') || '/me/';
 
   // 첫 방문 연출: 홈에서 탭당 한 번, 1.2초
   (function intro() {
@@ -97,15 +109,4 @@
       document.querySelectorAll('.grid .card').forEach(function (c) { c.hidden = !(f === '전체' || (' ' + c.getAttribute('data-tags') + ' ').indexOf(' ' + f + ' ') >= 0); }); });
   })();
 
-  // 상세 페이지 뒤로 버튼: 이 사이트에서 왔으면 브라우저 뒤로(위치 복원) + 앞 페이지 이름
-  (function back() {
-    var b = document.querySelector('a.back'); if (!b) return;
-    var ref = null; try { ref = document.referrer ? new URL(document.referrer) : null; } catch (e) {}
-    if (!ref || ref.origin !== location.origin || ref.pathname.indexOf(BASE) !== 0 || ref.pathname === location.pathname) return;
-    if (history.length < 2) return;   // 새 탭으로 열었으면 이름도 이동도 기본값(상위 목록)
-    var p = ref.pathname.slice(BASE.length).replace(/\/$/, '');
-    var NAMES = { '': '홈', 'work': '포트폴리오', 'projects': '프로젝트', 'resume': '이력서' };
-    var lab = b.querySelector('span:last-child'); if (lab) lab.textContent = NAMES[p] || '이전 페이지';
-    b.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
-  })();
 })();

@@ -25,7 +25,7 @@
     if (!ref || ref.origin !== location.origin || ref.pathname.indexOf(BASE) !== 0 || ref.pathname === location.pathname) return;
     if (history.length < 2) return;   // 새 탭으로 열었으면 이름도 이동도 기본값(상위 목록)
     var p = ref.pathname.slice(BASE.length).replace(/\/$/, '');
-    var NAMES = { '': '홈', 'work': '포트폴리오', 'projects': '프로젝트', 'resume': '이력서' };
+    var NAMES = { '': '홈', 'work': '해결 사례', 'projects': '프로젝트', 'resume': '이력서' };
     var lab = b.querySelector('span:last-child'); if (lab) lab.textContent = NAMES[p] || '이전 페이지';
     b.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
   })();

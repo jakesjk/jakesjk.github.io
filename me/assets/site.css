@@ -392,7 +392,7 @@ a.lu-c:hover{box-shadow:0 0 0 1.5px var(--ink),0 12px 28px rgba(0,0,0,.06)}
 .sl-br{display:none}
 @media (max-width:1439px){.sl-br{display:inline}}
 /* Lunarc 질문형 구성(10-09): 구역 제목 = 면접관 질문, 첫 줄 = 답 */
-.qa-q{font-size:24px;font-weight:700;letter-spacing:-.4px}
+.qa-q{font-size:24px;font-weight:700;letter-spacing:-.4px;line-height:1.35;text-wrap:balance}
 .qa-a{margin-top:10px;max-width:none;font-family:var(--body);font-size:16px;line-height:1.75;color:var(--ink2)}
 .wf{margin-top:22px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;counter-reset:wf}
 .wf li{position:relative;display:grid;gap:6px;align-content:start;padding:14px 14px 16px;border-radius:12px;background:#fff;box-shadow:0 0 0 1px var(--line)}
@@ -487,7 +487,7 @@ a.lu-c:hover{box-shadow:0 0 0 1.5px var(--ink),0 12px 28px rgba(0,0,0,.06)}
 .c5-l{margin-top:12px;display:grid;gap:8px;padding-left:1.2em;list-style:decimal;font-family:var(--body);font-size:16px;line-height:1.7;color:var(--ink2)}
 .c5-l li::marker{color:var(--hi,var(--acc));font-weight:700}
 .c5-c{margin-top:14px;display:flex;gap:12px;font-family:var(--body);font-size:14px;line-height:1.65;color:var(--ink2)} .c5-c b{flex:none;font-family:var(--sans);color:var(--ink)}
-@media (max-width:760px){ .c5-h{font-size:24px;margin-top:40px} .c5-fig{padding:14px 12px 12px;overflow-x:auto} .c5-fig svg{min-width:560px} .c5-c{flex-direction:column;gap:4px} }
+@media (max-width:760px){ .c5-h{font-size:24px;margin-top:40px} .c5-fig{padding:14px 12px 12px;overflow-x:auto} .c5-fig svg{min-width:880px} .c5-c{flex-direction:column;gap:4px} }
 .c5-sw{display:none} @media (max-width:760px){ .c5-sw{display:inline;font-weight:700;color:var(--ink2)} }
 /* 10-10 홈 원칙 카드 안 해결 사례 줄 */
 .pr-cs{display:grid;gap:2px;padding-top:12px;border-top:1px dashed var(--line)}

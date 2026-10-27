@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko" data-base="/me/">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>홍보 파이프라인 · 효과를 재서 발행량을 줄인 홍보 글 자동 발행 · 김성재</title>
+<meta name="description" content="Lunarc를 알리는 글을 매일 만들어 Threads와 Instagram 여섯 계정에 내보내는 Python 파이프라인입니다. 봇이 다음 날 분량의 초안을 쓰고 Discord 카드로 올리면 제가 승인한 것만 예약 시각에 나갑니다. 반응과 App Store 지표를 매일 모아 효과를 숫…">
+<link rel="canonical" href="https://jakesjk.github.io/me/projects/promo/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="홍보 파이프라인 · 효과를 재서 발행량을 줄인 홍보 글 자동 발행 · 김성재">
+<meta property="og:description" content="Lunarc를 알리는 글을 매일 만들어 Threads와 Instagram 여섯 계정에 내보내는 Python 파이프라인입니다. 봇이 다음 날 분량의 초안을 쓰고 Discord 카드로 올리면 제가 승인한 것만 예약 시각에 나갑니다. 반응과 App Store 지표를 매일 모아 효과를 숫…">
+<meta property="og:url" content="https://jakesjk.github.io/me/projects/promo/">
+<meta property="og:image" content="https://jakesjk.github.io/me/assets/og.jpg?v=20261027a">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nanum+Pen+Script&family=Geist+Mono:wght@400;500&family=Nanum+Gothic+Coding&display=swap">
+<style>@font-face{font-family:"Pretendard Variable";font-weight:45 920;font-style:normal;font-display:swap;src:url(/me/assets/pretendard-subset.woff2?v=20261027a) format("woff2-variations"),url(/me/assets/pretendard-subset.woff2?v=20261027a) format("woff2")}html,body{margin:0;background:#fbfbfa}</style>
+<link rel="stylesheet" href="/me/assets/site.css?v=20261027a">
+<script src="/me/assets/site.js?v=20261027a" defer></script>
+</head>
+<body>
+<div data-route="/projects/promo" data-role="ax" data-sl="1" class="s nosbar"><main style="--hi:var(--t-auto)"><a class="back" href="/me/projects/"><span aria-hidden="true">‹</span><span>프로젝트</span></a><div class="case"><article class="case-frame"><span class="case-tag" style="background:var(--t-auto)">자동화 · Python · Lunarc 홍보</span><div class="case-in"><h1 class="case-h lu-h"><span>홍보 파이프라인</span><span>효과를 재서 발행량을 줄인 홍보 글 자동 발행</span></h1><p class="lu-sub">Lunarc를 알리는 글을 매일 만들어 Threads와 Instagram 여섯 계정에 내보내는 Python 파이프라인입니다. 봇이 다음 날 분량의 초안을 쓰고 Discord 카드로 올리면 제가 승인한 것만 예약 시각에 나갑니다. 반응과 App Store 지표를 매일 모아 효과를 숫자로 보게 했고 반복이 도달을 떨어뜨리는 것이 드러난 뒤 발행량을 9분의 1로 줄였습니다. 무엇을 내보내고 언제 멈출지는 제가 정했고 코드는 AI 에이전트가 썼습니다. 2026년 3월에 시작해 7월부터 발행했습니다.</p><p class="lu-meta"><span>개인 프로젝트 · 설계 · 승인 · 운영</span><span>2026.03 ~ 현재</span><span>Python · Gemini · Threads API · SQLite</span></p><figure class="ev" aria-label="홍보 파이프라인 운영 수치"><div class="ev-h"><p class="ev-k">운영 DB 질의</p><p class="ev-t">sns-promo-pipeline · 2026-10-27</p><p class="ev-m"><span>Threads 3</span><span>Instagram 3</span><span>매일 20:00 배치</span><span>승인은 사람</span></p></div><ul class="ev-g ev-g4"><li><b>1,013</b><span>게시 · 2026.07 ~ 10</span></li><li><b>6</b><span>계정 · 언어 3 × 플랫폼 2</span></li><li><b>23,469</b><span>반응 시계열 행</span></li><li><b>2,141</b><span>테스트</span></li></ul><figcaption>운영 DB를 읽기 전용으로 질의한 값입니다. 팔로워와 다운로드 같은 성과 수치는 싣지 않았습니다.</figcaption></figure><section class="case-sec"><p class="sec-l">Q1 · 발행을 어떻게 자동화했나</p><h2 class="sec-t qa-q">초안은 봇이 쓰고 게시는 제가 승인한 것만 나가게 했습니다</h2><p class="qa-a">매일 20시에 봇이 다음 날 배치를 한국어로 쓰고 일본어와 영어로 옮깁니다. 승인과 제외를 한 장의 Discord 카드에 묶어 제가 누른 것만 예약 시각에 나가고 생성한 원고의 자동 승인은 두지 않았습니다.</p><ul class="lu-bd q-bd q-bd3"><li><b>6</b><span>계정 · 언어별 3 × 플랫폼 2</span></li><li><b>6</b><span>하루 발행 · 라운드 1 × 언어 3 × 플랫폼 2</span></li><li><b>1,013</b><span>게시 · 2026.07 ~ 10</span></li></ul><p class="q-sub">상한은 설정 파일이 아니라 코드 상수</p><p class="q-p">설정 파일에 적어 둔 값은 코드가 읽지 않으면 지켜지지 않았습니다. 답글 상한은 설정 파일이 아니라 코드 상수(계정당 하루 3)로 박고 그 값을 그대로 단언하는 테스트를 붙였습니다.</p></section><section class="case-sec"><p class="sec-l">Q2 · 효과를 어떻게 쟀나</p><h2 class="sec-t qa-q">반복이 도달을 떨어뜨리는 것을 수치로 확인하고 발행량을 9분의 1로 줄였습니다</h2><p class="qa-a">글이 서로 비슷해질수록 조회가 줄어드는지부터 재야 했습니다. 연속일 유사도와 24시간 조회를 계정마다 대조하자 유사도가 0.80을 넘은 뒤 2~3일 시차로 조회가 70% 떨어졌고 세 계정이 유사도 순서대로 하락했습니다.</p><ul class="lu-bd q-bd"><li><b>−70%</b><span>유사도 0.80을 넘은 뒤 24시간 조회</span></li><li><b>3 / 3</b><span>유사도 순서대로 하락한 계정</span></li><li><b>54 → 6</b><span>하루 발행</span></li><li><b>2~3일</b><span>유사도 상승이 조회에 반영되는 시차</span></li></ul><p class="q-sub">전면 중단을 오프 실험으로</p><p class="q-p">계정은 보존하고 수집은 계속한 채 발행만 멈춰 변화를 봤습니다. 대체 계정과 자동 답글은 정책 위반이라 선택지에서 뺐고 재개할 때 판정 지표를 조회에서 팔로워와 남의 답글로 바꿨습니다.</p></section><section class="case-sec"><p class="sec-l">Q3 · 무인 운영에서 무엇이 깨졌고 어떻게 막았나</p><h2 class="sec-t qa-q">봇이 살아 있는데 35시간 침묵한 장애 뒤로 실패가 보이게 만들었습니다</h2><p class="qa-a">봇 프로세스는 살아 있었지만 SQLite 연결이 닫히지 않아 수집이 35시간 멈추는 동안 경보는 0건이었습니다. 연결을 닫는 방식을 고치는 데서 멈추지 않고 실패가 조용히 지나가는 길을 하나씩 막았습니다.</p><ul class="lu-bd q-bd"><li><b>256 → 10</b><span>열린 파일 기술자</span></li><li><b>16 / 16</b><span>일부러 심은 결함을 테스트가 잡은 수</span></li><li><b>24</b><span>연결 처리를 고친 곳</span></li><li><b>1</b><span>하루 요약 경보</span></li></ul><div class="qg"><article class="qc"><p class="qc-k">틀린 진단</p><h3 class="qc-t">첫 진단은 틀렸습니다</h3><p class="qc-b">처음엔 예외 순환 참조로 봤습니다. 리뷰 에이전트가 손상 DB를 60회 호출해 재현하자 연결을 닫는다고 믿었던 구문이 실제로는 트랜잭션만 묶고 있었다는 것이 드러났고 24곳을 고쳤습니다.</p></article><article class="qc"><p class="qc-k">경보 유실</p><h3 class="qc-t">경보가 죽는 경로를 따로 세기</h3><p class="qc-b">건너뜀 경보가 장애와 같은 경로로 가다 함께 죽었습니다. 보내지 못한 경보를 따로 세고 하루 요약 한 건으로 묶었습니다.</p></article></div><p class="q-more">발행은 돌아가지만 효과는 아직 확인되지 않았습니다. 노트북 한 대에서 돌려 잠들면 멈추는 구조라 서버 이전은 설계만 했습니다.</p></section><nav class="pn" aria-label="이전 · 다음"><a class="pill" href="/me/projects/shift/">‹ 이전 · Shift 하네스</a><a class="pill" href="/me/projects/lunarc/">다음 · Lunarc ›</a></nav></div></article></div></main></div>
+</body>
+</html>
